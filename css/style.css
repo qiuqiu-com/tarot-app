@@ -195,6 +195,7 @@ html, body {
   gap: 12px;
   padding: 20px 0;
   position: relative;
+  width: 100%;
 }
 
 .logo-scale-wrap {
@@ -239,7 +240,6 @@ html, body {
   font-family: serif;
   text-align: center;
   width: 100%;
-  max-width: 280px;
   line-height: 1.6;
 }
 
