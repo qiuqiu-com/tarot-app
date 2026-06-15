@@ -24,13 +24,27 @@ export async function onRequest(context) {
     return new Response('Method not allowed', { status: 405 });
   }
 
-  const { messages, cardContext, language } = await request.json();
+  const { messages, cardContext, language, question } = await request.json();
+
+  // 检测问题语言，优先级高于 UI 语言
+  let detectedLang = language || 'zh';
+  if (question && question.trim()) {
+    const cyrillic = (question.match(/[а-яё]/gi) || []).length;
+    const latin   = (question.match(/[a-z]/gi) || []).length;
+    const cjk     = (question.match(/[一-鿿]/g) || []).length;
+    const total   = cyrillic + latin + cjk;
+    if (total > 0) {
+      if (cyrillic > latin && cyrillic > cjk) detectedLang = 'ru';
+      else if (latin > cjk) detectedLang = 'en';
+      else detectedLang = 'zh';
+    }
+  }
 
   const langRule = {
     zh: '用中文回答。',
     en: 'Answer in English.',
     ru: 'Отвечай на русском языке.'
-  }[language] || '用中文回答。';
+  }[detectedLang] || '用中文回答。';
 
   const systemPrompt = `你是一位神秘而睿智的塔罗占卜师，拥有深厚的塔罗知识与直觉洞察力。
 当前牌阵信息：

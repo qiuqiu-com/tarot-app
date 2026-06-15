@@ -477,7 +477,8 @@ function showReading() {
           body: JSON.stringify({
             messages: chatHistory,
             cardContext,
-            language: getLang()
+            language: getLang(),
+            question: currentReading?.question || ''
           })
         });
         const data = await res.json();
