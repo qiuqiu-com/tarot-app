@@ -186,13 +186,14 @@ html, body {
   animation: scale-swing 4s ease-in-out infinite;
   transform-origin: center top;
   filter: drop-shadow(0 0 12px rgba(201,168,76,0.5));
+  mix-blend-mode: multiply;
 }
 
 .logo-eye {
   position: absolute;
   width: 60px;
   height: 60px;
-  top: 38%;
+  top: 16%;
   left: 50%;
   transform: translateX(-50%);
   animation: eye-glow 3s ease-in-out infinite;
