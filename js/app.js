@@ -681,7 +681,7 @@ $('#btn-share-toggle').addEventListener('click', () => {
 
     if (!currentReading) return;
     const r = currentReading;
-    let text = `${__('share-title')}\n`;
+    let text = `${__('tagline')}\n`;
     text += `${r.spread.id ? __(SPREAD_NAMES[r.spread.id]) : r.spread.name}\n`;
     if (r.question) text += `${r.question}\n`;
     text += `${formatDate(r.date.toISOString())}\n`;
@@ -692,7 +692,7 @@ $('#btn-share-toggle').addEventListener('click', () => {
         text += `  ${getCardReading(c.card, c.reversed).meaning.slice(0, 40)}……\n`;
     });
     text += `━`.repeat(18) + `\n`;
-    text += `${__('share-from')}`;
+    text += window.location.origin + window.location.pathname;
 
     ta.value = text;
     box.style.display = 'block';
