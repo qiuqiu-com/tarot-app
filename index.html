@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>神秘塔罗 · 专业占卜</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="stars"></div>
+
+<div id="app">
+
+    <!-- ==================== 欢迎页 ==================== -->
+    <section id="page-welcome" class="page page-welcome active">
+        <div class="welcome-brand">
+            <div class="emblem">✦</div>
+            <h1>神秘塔罗</h1>
+            <p class="subtitle">Mystic Tarot · 洞见内心之光</p>
+        </div>
+
+        <div class="question-area">
+            <label>▎你想问什么？（可选）</label>
+            <input type="text" id="question-input"
+                   placeholder="例如：我最近的事业运如何……"
+                   maxlength="100">
+        </div>
+
+        <div class="welcome-actions">
+            <button id="btn-start" class="btn-gold">开始占卜</button>
+            <button id="btn-daily" class="btn-ghost">🌅 每日塔罗</button>
+            <button id="btn-index" class="btn-ghost">📖 卡牌百科</button>
+            <button id="btn-history" class="btn-ghost">📋 占卜记录</button>
+        </div>
+    </section>
+
+    <!-- ==================== 选择牌阵 ==================== -->
+    <section id="page-spread" class="page">
+        <div class="page-header">
+            <button class="btn-back" data-target="page-welcome">←</button>
+            <h2>选择牌阵</h2>
+            <p>根据你的问题选择最合适的牌阵</p>
+        </div>
+        <div class="spread-grid" id="spread-grid">
+            <!-- JS 动态渲染 -->
+        </div>
+    </section>
+
+    <!-- ==================== 洗牌 ==================== -->
+    <section id="page-shuffle" class="page">
+        <div class="page-header">
+            <h2>灵性洗牌</h2>
+        </div>
+        <div class="shuffle-area">
+            <div class="shuffle-question" id="shuffle-question"></div>
+            <div class="shuffle-table" id="shuffle-table">
+                <!-- JS 动态生成 -->
+            </div>
+            <p class="shuffle-hint">集中精神 · 默念你的问题 · 深呼吸</p>
+            <div class="shuffle-progress">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 翻牌 ==================== -->
+    <section id="page-draw" class="page">
+        <div class="page-header">
+            <h2>翻牌仪式</h2>
+            <p id="draw-hint">依次点击牌面，揭开命运的面纱</p>
+        </div>
+        <div class="draw-area" id="draw-area"></div>
+    </section>
+
+    <!-- ==================== 解读结果 ==================== -->
+    <section id="page-reading" class="page">
+        <div class="page-header">
+            <button class="btn-back" data-target="page-welcome">←</button>
+            <h2>占卜解读</h2>
+        </div>
+        <div class="reading-area" id="reading-area"></div>
+        <div class="reading-actions">
+            <button id="btn-save" class="btn-gold small">💾 保存记录</button>
+            <button id="btn-share-toggle" class="btn-ghost">📤 分享解读</button>
+            <button id="btn-redo" class="btn-ghost">🔄 重新占卜</button>
+            <div class="share-text" id="share-text-box">
+                <textarea id="share-textarea" readonly></textarea>
+                <button class="btn-gold small" id="btn-copy-share" style="margin-top:8px;">
+                    📋 复制到剪贴板
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 卡牌百科 ==================== -->
+    <section id="page-index" class="page">
+        <div class="page-header">
+            <button class="btn-back" data-target="page-welcome">←</button>
+            <h2>卡牌百科</h2>
+            <p>浏览全部 78 张塔罗牌</p>
+        </div>
+        <div class="index-controls">
+            <input type="text" id="index-search"
+                   placeholder="搜索牌名（中文或英文）……">
+            <div class="index-filters" id="index-filters">
+                <button data-filter="all" class="active">全部</button>
+                <button data-filter="major">大阿卡纳</button>
+                <button data-filter="wands">权杖</button>
+                <button data-filter="cups">圣杯</button>
+                <button data-filter="swords">宝剑</button>
+                <button data-filter="pentacles">星币</button>
+            </div>
+        </div>
+        <div class="index-grid" id="index-grid"></div>
+    </section>
+
+    <!-- ==================== 每日塔罗 ==================== -->
+    <section id="page-daily" class="page">
+        <div class="page-header">
+            <button class="btn-back" data-target="page-welcome">←</button>
+            <h2>🌅 每日塔罗</h2>
+            <p>今日的灵性指引</p>
+        </div>
+        <div class="daily-card-area" id="daily-card-area"></div>
+    </section>
+
+    <!-- ==================== 历史记录 ==================== -->
+    <section id="page-history" class="page">
+        <div class="page-header">
+            <button class="btn-back" data-target="page-welcome">←</button>
+            <h2>占卜记录</h2>
+            <p>你的占卜旅程</p>
+        </div>
+        <div class="history-list" id="history-list"></div>
+        <div class="history-empty" id="history-empty">
+            <p>✨ 还没有占卜记录<br>开始你的第一次探索吧</p>
+            <button class="btn-gold small" onclick="showPage('page-welcome')">开始占卜</button>
+        </div>
+    </section>
+
+</div>
+
+<!-- ==================== 卡牌详情弹窗 ==================== -->
+<div id="modal-overlay" class="modal-overlay hidden">
+    <div class="modal-dialog" id="modal-dialog"></div>
+</div>
+
+<!-- ==================== 脚本 ==================== -->
+<script src="js/cards.js"></script>
+<script src="js/spreads.js"></script>
+<script src="js/history.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
