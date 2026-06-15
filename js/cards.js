@@ -716,6 +716,8 @@ function getCardMeta(card) {
         meta.typeKey = 'suit-' + card.suit + '-full';
         meta.element = suitMeta.element || '';
         meta.elementNature = suitMeta.nature || '';
+        const elemKeys = { wands: 'elem-fire-nature', cups: 'elem-water-nature', swords: 'elem-air-nature', pentacles: 'elem-earth-nature' };
+        meta.elementTransKey = elemKeys[card.suit] || '';
         meta.numberMeaning = NUMBER_MEANINGS[card.number]
             ? `${card.number} · ${NUMBER_MEANINGS[card.number].meaning}`
             : '宫廷牌 · 人物原型';

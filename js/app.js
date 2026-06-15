@@ -219,7 +219,7 @@ function enterDrawPhase(spreadId) {
             const imgUrl = getCardImageUrl(item.card);
 
             // 牌面 = 真实塔罗牌图片
-            const revBadge = item.reversed ? '<span style="position:absolute;bottom:6px;right:6px;background:rgba(139,68,128,0.85);color:#fff;font-size:0.55rem;padding:2px 8px;border-radius:8px;letter-spacing:1px;z-index:2;">▼ 逆位</span>' : '';
+            const revBadge = item.reversed ? `<span style="position:absolute;bottom:6px;right:6px;background:rgba(139,68,128,0.85);color:#fff;font-size:0.55rem;padding:2px 8px;border-radius:8px;letter-spacing:1px;z-index:2;">▼ ${__('draw-rev')}</span>` : '';
             const frontHtml = `
                 <img src="${imgUrl}"
                      alt="${item.card.name} - ${item.card.nameEn}"
@@ -280,12 +280,11 @@ function generateReadingSummary(reading) {
     cards.forEach(c => {
         if (c.card.suit) suitMap[c.card.suit]++;
     });
-    const elementNames = { wands: '火', cups: '水', swords: '风', pentacles: '土' };
 
     // 收集所有关键词
     const allKeywords = [];
     cards.forEach(c => {
-        c.card.keywords.forEach(kw => {
+        t(c.card, 'keywords').forEach(kw => {
             if (!allKeywords.includes(kw)) allKeywords.push(kw);
         });
     });
@@ -308,9 +307,7 @@ function generateReadingSummary(reading) {
     } else if (presentElements.length === 1) {
         const suit = Object.entries(suitMap).find(([_, c]) => c > 0)[0];
         const el = __(elemKeys[suit]);
-        const elNatureKeys = { wands: 'elem-fire-nature', cups: 'elem-water-nature',
-            swords: 'elem-air-nature', pentacles: 'elem-earth-nature' };
-        elementAnalysis = `${el}${__(elNatureKeys[suit])}${__('overview-elem1')}`;
+        elementAnalysis = `${el}${__('overview-elem1')}`;
     } else if (presentElements.length === 2) {
         elementAnalysis = `${presentElements.join('、')}${__('overview-elem2')}`;
     } else if (presentElements.length >= 3) {
@@ -522,8 +519,8 @@ function showReading() {
             <div class="rci-content">
                 <div class="rci-position">${__(item.position.labelKey)}</div>
                 <div class="rci-position-desc">${item.position.descKey ? __(item.position.descKey) : ''}</div>
-                <div class="rci-card-name">${t(item.card, 'name')} <span style="font-weight:400;font-size:0.85rem;color:var(--text-dim);">· ${item.card.nameEn}</span></div>
-                <div class="rci-card-sub">${meta.typeKey && typeof __ === 'function' ? __(meta.typeKey) : meta.type} · ${meta.astrology || meta.element || ''}</div>
+                <div class="rci-card-name">${t(item.card, 'name')}${getLang() === 'zh' ? ` <span style="font-weight:400;font-size:0.85rem;color:var(--text-dim);">· ${item.card.nameEn}</span>` : ''}</div>
+                <div class="rci-card-sub">${meta.typeKey && typeof __ === 'function' ? __(meta.typeKey) : meta.type} · ${meta.astrology || (meta.elementTransKey && typeof __ === 'function' ? __(meta.elementTransKey) : meta.element) || ''}</div>
                 <div class="rci-orientation">${reading.orientation} · ${item.card.number}</div>
                 <div class="rci-meaning">${reading.meaning}</div>
                 <div class="rci-tags">
@@ -547,7 +544,7 @@ function showCardDetail(card, reversed) {
     const meta = getCardMeta(card);
 
     const orientationSymbol = reversed ? '▼' : '▲';
-    const orientationClass = reversed ? '逆位' : '正位';
+    const orientationClass = reading.orientation;
 
     let infoGrid = `
         <div class="modal-info-grid">
@@ -620,8 +617,8 @@ function showCardDetail(card, reversed) {
             <h4>${__('modal-insight')}</h4>
             <p style="color:var(--gold-light);font-style:italic;">
                 ${card.arcana === 'major'
-                    ? `大阿卡纳第 ${card.number} 号牌「${card.name}」是人生旅程中的重要课题。它邀请你深入体悟${card.keywords.slice(0,2).join('与')}的能量。`
-                    : `这张「${card.name}」属于${meta.type}。${meta.elementNature ? '其元素为' + meta.elementNature + '。' : ''}关注牌面数字${card.number}在当下情境中的启示。`}
+                    ? `${t(card, 'name')} — ${__('insight-major')} ${t(card, 'keywords').slice(0,2).join(' & ')}。`
+                    : `${__('insight-minor')} ${meta.typeKey && typeof __ === 'function' ? __(meta.typeKey) : meta.type}。${__('insight-minor2')} ${card.number} ${__('insight-in')}。`}
             </p>
         </div>
     `;
@@ -648,8 +645,8 @@ document.addEventListener('keydown', e => {
 $('#btn-save').addEventListener('click', () => {
     if (!currentReading) return;
     const id = saveReading(currentReading);
-    if (id !== -1) showToast('✅ 占卜记录已保存');
-    else showToast('保存失败，请稍后再试');
+    if (id !== -1) showToast('✅ ' + __('btn-save'));
+    else showToast('❌ ' + __('chat-error'));
 });
 
 $('#btn-redo').addEventListener('click', () => {
@@ -669,18 +666,18 @@ $('#btn-share-toggle').addEventListener('click', () => {
 
     if (!currentReading) return;
     const r = currentReading;
-    let text = `✦ 神秘塔罗 · 占卜分享 ✦\n`;
-    text += `牌阵：${r.spread.name}\n`;
-    if (r.question) text += `问题：${r.question}\n`;
-    text += `日期：${formatDate(r.date.toISOString())}\n`;
+    let text = `${__('share-title')}\n`;
+    text += `${r.spread.id ? __(SPREAD_NAMES[r.spread.id]) : r.spread.name}\n`;
+    if (r.question) text += `${r.question}\n`;
+    text += `${formatDate(r.date.toISOString())}\n`;
     text += `━`.repeat(18) + `\n`;
     r.cards.forEach(c => {
-        const o = c.reversed ? '逆位' : '正位';
-        text += `${c.position.label}：${c.card.name}（${o}）\n`;
+        const o = c.reversed ? __('draw-rev') : __('draw-upright');
+        text += `${__(c.position.labelKey)}：${t(c.card, 'name')}（${o}）\n`;
         text += `  ${getCardReading(c.card, c.reversed).meaning.slice(0, 40)}……\n`;
     });
     text += `━`.repeat(18) + `\n`;
-    text += `✨ 由「神秘塔罗」生成`;
+    text += `${__('share-from')}`;
 
     ta.value = text;
     box.style.display = 'block';
@@ -690,11 +687,11 @@ $('#btn-copy-share').addEventListener('click', async () => {
     const ta = $('#share-textarea');
     try {
         await navigator.clipboard.writeText(ta.value);
-        showToast('✅ 已复制到剪贴板');
+        showToast('✅ ' + __('btn-copy'));
     } catch {
         ta.select();
         document.execCommand('copy');
-        showToast('✅ 已复制到剪贴板');
+        showToast('✅ ' + __('btn-copy'));
     }
 });
 
@@ -720,7 +717,7 @@ function renderCardIndex(filter = 'all', search = '') {
     }
 
     if (cards.length === 0) {
-        grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--text-dim);">没有找到匹配的牌</div>`;
+        grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--text-dim);">${__('no-results')}</div>`;
         return;
     }
 
@@ -780,8 +777,15 @@ function renderDailyCard() {
     const reading = getCardReading(card, reversed);
     const meta = getCardMeta(card);
 
-    const weekDays = ['日', '一', '二', '三', '四', '五', '六'];
-    const dateStr = `${today.getFullYear()}年${today.getMonth()+1}月${today.getDate()}日 星期${weekDays[today.getDay()]}`;
+    const lang = getLang();
+    const weekDays = lang === 'en'
+        ? ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
+        : lang === 'ru'
+        ? ['Вс','Пн','Вт','Ср','Чт','Пт','Сб']
+        : ['日', '一', '二', '三', '四', '五', '六'];
+    const dateStr = lang === 'zh'
+        ? `${today.getFullYear()}年${today.getMonth()+1}月${today.getDate()}日 星期${weekDays[today.getDay()]}`
+        : `${weekDays[today.getDay()]}, ${today.getMonth()+1}/${today.getDate()}/${today.getFullYear()}`;
 
     area.innerHTML = `
         <div style="margin-bottom:20px;">
@@ -842,7 +846,7 @@ function renderHistory() {
         div.className = 'history-item';
 
         const cardSummary = rec.cards.map(c =>
-            `${c.symbol} ${c.cardName}${c.reversed ? '(逆)' : ''}`
+            `${c.symbol} ${c.cardName}${c.reversed ? '(' + __('draw-rev') + ')' : ''}`
         ).join(' · ');
 
         div.innerHTML = `
@@ -860,10 +864,10 @@ function renderHistory() {
 
         div.querySelector('.hi-delete').addEventListener('click', e => {
             e.stopPropagation();
-            if (confirm('确定删除这条记录吗？')) {
+            if (confirm(__('confirm-delete'))) {
                 deleteHistory(rec.id);
                 renderHistory();
-                showToast('已删除');
+                showToast('🗑️');
             }
         });
 
@@ -879,7 +883,7 @@ function showHistoryDetail(record) {
         const card = getCardById(c.cardId);
         const meaning = c.meaning || (card ? (c.reversed ? card.meaningRev : card.meaningUp) : '');
         const meta = card ? getCardMeta(card) : { type: '', astrology: '', element: '' };
-        const orientation = c.reversed ? '逆位' : '正位';
+        const orientation = c.reversed ? __('draw-rev') : __('draw-upright');
         const imgUrl = card ? getCardImageUrl(card) : '';
         return `
             <div class="reading-card-item" style="margin-bottom:10px;cursor:default;">
@@ -895,7 +899,7 @@ function showHistoryDetail(record) {
                 <div class="rci-content">
                     <div class="rci-position">${c.position}</div>
                     <div class="rci-card-name">${c.cardName}</div>
-                    <div class="rci-card-sub">${meta.typeKey && typeof __ === 'function' ? __(meta.typeKey) : meta.type} · ${meta.astrology || meta.element || ''}</div>
+                    <div class="rci-card-sub">${meta.typeKey && typeof __ === 'function' ? __(meta.typeKey) : meta.type} · ${meta.astrology || (meta.elementTransKey && typeof __ === 'function' ? __(meta.elementTransKey) : meta.element) || ''}</div>
                     <div class="rci-orientation">${orientation}</div>
                     <div class="rci-meaning">${meaning}</div>
                 </div>
@@ -927,7 +931,7 @@ function showHistoryDetail(record) {
 /** 构建传给 AI 占卜师的牌阵上下文 */
 function buildCardContext() {
   const question = currentReading?.question
-    ? `用户的占卜问题：${currentReading.question}\n\n`
+    ? `${__('q-label')}：${currentReading.question}\n\n`
     : '';
   return question + currentReading.cards.map(item =>
     `${item.card.name}（${item.reversed ? '逆位' : '正位'}）- ${item.position.label}`
