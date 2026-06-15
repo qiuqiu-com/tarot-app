@@ -704,7 +704,7 @@ const UI = {
 
   // ====== 欢迎页 ======
   'title':           { zh: '塔罗', en: 'Tarot', ru: 'Таро' },
-  'tagline':         { zh: '命运注视着你，但他无法将我们控制', en: 'Fate watches you, but it cannot control us', ru: 'Судьба наблюдает за тобой, но не может управлять нами' },
+  'tagline':         { zh: '命运正注视着你，但他对我们无能为力', en: 'Fate watches you, but it cannot control us', ru: 'Судьба наблюдает за тобой, но не может управлять нами' },
   'q-label':         { zh: '▎你想问什么？（可选）', en: '▎ Your question? (optional)', ru: '▎ Ваш вопрос? (необязательно)' },
   'q-placeholder':   { zh: '例如：我最近的事业运如何……', en: 'e.g. How is my career lately...', ru: 'Например: как моя карьера...' },
   'btn-start':       { zh: '开始占卜', en: 'Start Reading', ru: 'Начать гадание' },

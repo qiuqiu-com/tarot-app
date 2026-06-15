@@ -238,6 +238,9 @@ html, body {
   color: rgba(201,168,76,0.6);
   font-family: serif;
   text-align: center;
+  width: 100%;
+  max-width: 280px;
+  line-height: 1.6;
 }
 
 @keyframes scale-swing {
