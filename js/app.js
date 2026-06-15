@@ -483,7 +483,18 @@ function showReading() {
         const data = await res.json();
         const reply = data.choices?.[0]?.message?.content || __('chat-error');
         chatHistory.push({ role: 'assistant', content: reply });
-        typingEl.textContent = reply;
+        // 打字机效果
+        typingEl.textContent = '';
+        let ci = 0;
+        const typer = setInterval(() => {
+          if (ci < reply.length) {
+            typingEl.textContent += reply[ci];
+            ci++;
+            typingEl.scrollIntoView({ behavior: 'smooth' });
+          } else {
+            clearInterval(typer);
+          }
+        }, 30);
       } catch {
         typingEl.textContent = __('chat-error');
       }
