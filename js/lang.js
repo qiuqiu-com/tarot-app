@@ -671,11 +671,17 @@ function t(card, field, lang) {
   lang = lang || _currentLang;
   if (lang === 'zh') return card[field];
 
+  // 名字特殊处理：EN用 nameEn，RU用 LANG 里的 name
+  if (field === 'name') {
+    if (lang === 'en') return card.nameEn || card[field];
+    const ruName = LANG[card.id]?.ru?.name;
+    return ruName || card[field];
+  }
+
   const l = LANG[card.id];
   if (!l) return card[field];
 
   const map = {
-    name:     { en: '', ru: 'name' },
     keywords: { en: 'keywords', ru: 'keywords' },
     meaningUp:  { en: 'meaningUp', ru: 'meaningUp' },
     meaningRev: { en: 'meaningRev', ru: 'meaningRev' }

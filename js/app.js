@@ -439,7 +439,7 @@ function showReading() {
     askBtn.className = 'ask-reader-section';
     askBtn.innerHTML = `
       <div class="ask-reader-entry">
-        <button id="btn-ask-reader">🔮 询问占卜师</button>
+        <button id="btn-ask-reader">${__('btn-ask')}</button>
       </div>
       <div id="reader-chat" class="reader-chat hidden">
         <div id="chat-messages" class="chat-messages"></div>
@@ -523,7 +523,7 @@ function showReading() {
                 <div class="rci-position">${__(item.position.labelKey)}</div>
                 <div class="rci-position-desc">${item.position.descKey ? __(item.position.descKey) : ''}</div>
                 <div class="rci-card-name">${t(item.card, 'name')} <span style="font-weight:400;font-size:0.85rem;color:var(--text-dim);">· ${item.card.nameEn}</span></div>
-                <div class="rci-card-sub">${meta.type} · ${meta.astrology || meta.element || ''}</div>
+                <div class="rci-card-sub">${meta.typeKey && typeof __ === 'function' ? __(meta.typeKey) : meta.type} · ${meta.astrology || meta.element || ''}</div>
                 <div class="rci-orientation">${reading.orientation} · ${item.card.number}</div>
                 <div class="rci-meaning">${reading.meaning}</div>
                 <div class="rci-tags">
@@ -806,7 +806,7 @@ function renderDailyCard() {
         </div>
 
         <div class="daily-affirmation">
-            ✦ ${card.keywords[0]} · ${card.keywords[1]} ✦
+            ✦ ${t(card, 'keywords')[0]} · ${t(card, 'keywords')[1]} ✦
         </div>
 
         <div style="margin-top:20px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center;">
@@ -895,7 +895,7 @@ function showHistoryDetail(record) {
                 <div class="rci-content">
                     <div class="rci-position">${c.position}</div>
                     <div class="rci-card-name">${c.cardName}</div>
-                    <div class="rci-card-sub">${meta.type} · ${meta.astrology || meta.element || ''}</div>
+                    <div class="rci-card-sub">${meta.typeKey && typeof __ === 'function' ? __(meta.typeKey) : meta.type} · ${meta.astrology || meta.element || ''}</div>
                     <div class="rci-orientation">${orientation}</div>
                     <div class="rci-meaning">${meaning}</div>
                 </div>
