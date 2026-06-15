@@ -690,3 +690,97 @@ function t(card, field, lang) {
   const val = l[lang]?.[key];
   return val !== undefined ? val : card[field];
 }
+
+/* ==================================================================
+   UI 界面文字翻译
+   ================================================================== */
+const UI = {
+  // 欢迎页
+  'title':           { zh: '塔罗', en: 'Tarot', ru: 'Таро' },
+  'tagline':         { zh: '命运注视着你，但他无法将我们控制', en: 'Fate watches you, but it cannot control us', ru: 'Судьба наблюдает за тобой, но не может управлять нами' },
+  'q-label':         { zh: '▎你想问什么？（可选）', en: '▎ What is your question? (optional)', ru: '▎ Какой у вас вопрос? (необязательно)' },
+  'q-placeholder':   { zh: '例如：我最近的事业运如何……', en: 'e.g. What about my career lately...', ru: 'Например: как мои дела в карьере...' },
+  'btn-start':       { zh: '开始占卜', en: 'Start Reading', ru: 'Начать гадание' },
+  'btn-daily':       { zh: '🌅 每日塔罗', en: '🌅 Daily Card', ru: '🌅 Карта дня' },
+  'btn-index':       { zh: '📖 卡牌百科', en: '📖 Card Index', ru: '📖 Все карты' },
+  'btn-history':     { zh: '📋 占卜记录', en: '📋 History', ru: '📋 История' },
+
+  // 页面标题
+  'page-spread':     { zh: '选择牌阵', en: 'Choose a Spread', ru: 'Выберите расклад' },
+  'spread-desc':     { zh: '根据你的问题选择最合适的牌阵', en: 'Pick the spread that fits your question', ru: 'Выберите расклад, подходящий вашему вопросу' },
+  'page-shuffle':    { zh: '灵性洗牌', en: 'Spiritual Shuffle', ru: 'Духовное перемешивание' },
+  'shuffle-hint':    { zh: '集中精神 · 默念你的问题 · 深呼吸', en: 'Focus · Think of your question · Breathe', ru: 'Сосредоточься · Думай о вопросе · Дыши' },
+  'page-draw':       { zh: '翻牌仪式', en: 'Reveal the Cards', ru: 'Откройте карты' },
+  'draw-hint':       { zh: '依次点击牌面，揭开命运的面纱', en: 'Click each card to reveal your fate', ru: 'Нажимайте на карты, чтобы открыть судьбу' },
+  'page-reading':    { zh: '占卜解读', en: 'Your Reading', ru: 'Ваше гадание' },
+  'page-index':      { zh: '卡牌百科', en: 'Card Index', ru: 'Все карты' },
+  'index-desc':      { zh: '浏览全部 78 张塔罗牌', en: 'Browse all 78 tarot cards', ru: 'Просмотр всех 78 карт Таро' },
+  'page-daily':      { zh: '🌅 每日塔罗', en: '🌅 Daily Card', ru: '🌅 Карта дня' },
+  'daily-desc':      { zh: '今日的灵性指引', en: 'Today\'s spiritual guidance', ru: 'Сегодняшнее духовное руководство' },
+  'page-history':    { zh: '占卜记录', en: 'Reading History', ru: 'История гаданий' },
+  'history-desc':    { zh: '你的占卜旅程', en: 'Your journey through the cards', ru: 'Твой путь через карты' },
+
+  // 按钮
+  'btn-save':        { zh: '💾 保存记录', en: '💾 Save', ru: '💾 Сохранить' },
+  'btn-share':       { zh: '📤 分享解读', en: '📤 Share', ru: '📤 Поделиться' },
+  'btn-redo':        { zh: '🔄 重新占卜', en: '🔄 New Reading', ru: '🔄 Новое гадание' },
+  'btn-copy':        { zh: '📋 复制到剪贴板', en: '📋 Copy to Clipboard', ru: '📋 Копировать' },
+  'btn-ask':         { zh: '🔮 询问占卜师', en: '🔮 Ask the Reader', ru: '🔮 Спросить таролога' },
+  'chat-placeholder':{ zh: '向占卜师提问……', en: 'Ask the tarot reader...', ru: 'Спросите таролога...' },
+  'chat-send':       { zh: '发送', en: 'Send', ru: 'Отправить' },
+  'chat-welcome':    { zh: '🔮 牌已为你展开，有何疑惑，尽管道来……', en: '🔮 The cards are laid. What weighs on your mind...', ru: '🔮 Карты раскрыты. Что тревожит тебя...' },
+  'chat-error':      { zh: '占卜师暂时无法感应，请稍后再试……', en: 'The reader cannot sense you now. Try again later...', ru: 'Таролог не может почувствовать вас сейчас. Попробуйте позже...' },
+
+  // 百科筛选
+  'filter-all':      { zh: '全部', en: 'All', ru: 'Все' },
+  'filter-major':    { zh: '大阿卡纳', en: 'Major Arcana', ru: 'Старшие Арканы' },
+  'filter-wands':    { zh: '权杖', en: 'Wands', ru: 'Жезлы' },
+  'filter-cups':     { zh: '圣杯', en: 'Cups', ru: 'Кубки' },
+  'filter-swords':   { zh: '宝剑', en: 'Swords', ru: 'Мечи' },
+  'filter-pentacles':{ zh: '星币', en: 'Pentacles', ru: 'Пентакли' },
+
+  // 历史
+  'history-empty':   { zh: '✨ 还没有占卜记录<br>开始你的第一次探索吧', en: '✨ No readings yet<br>Start your first探索', ru: '✨ Ещё нет гаданий<br>Начни своё первое' },
+  'history-empty-btn':{ zh: '开始占卜', en: 'Start Reading', ru: 'Начать гадание' },
+
+  // 模态标签
+  'meta-type':       { zh: '类型', en: 'Type', ru: 'Тип' },
+  'meta-number':     { zh: '编号', en: 'Number', ru: 'Номер' },
+  'meta-element':    { zh: '元素', en: 'Element', ru: 'Стихия' },
+  'meta-numerology': { zh: '灵数', en: 'Numerology', ru: 'Нумерология' },
+  'meta-astrology':  { zh: '占星', en: 'Astrology', ru: 'Астрология' },
+  'meta-hebrew':     { zh: '希伯来', en: 'Hebrew', ru: 'Иврит' },
+  'modal-reading':   { zh: '解读', en: 'Reading', ru: 'Значение' },
+  'modal-keywords':  { zh: '关键词', en: 'Keywords', ru: 'Ключевые слова' },
+  'modal-insight':   { zh: '灵性启示', en: 'Spiritual Insight', ru: 'Духовное прозрение' },
+
+  // 总览
+  'summary-title':   { zh: '✦ 全局总览 ✦', en: '✦ Overview ✦', ru: '✦ Общий обзор ✦' },
+  'detail-divider':  { zh: '逐牌详解', en: 'Card Details', ru: 'Детали карт' },
+
+  // 每日塔罗
+  'daily-start':     { zh: '开始占卜 →', en: 'Start Reading →', ru: 'Начать гадание →' },
+
+  // 占卜师聊天
+  'reader-title':    { zh: '✦ 全局总览 ✦', en: '✦ Overview ✦', ru: '✦ Общий обзор ✦' },
+
+  // 翻牌
+  'draw-click-hint': { zh: '点击牌面揭开 · 共', en: 'Click to reveal ·', ru: 'Нажмите, чтобы открыть ·' },
+  'draw-cards':      { zh: '张', en: 'cards', ru: 'карт' },
+  'draw-revealed':   { zh: '✨ 所有牌已揭开 · 解读中……', en: '✨ All cards revealed · Reading...', ru: '✨ Все карты открыты · Чтение...' },
+  'draw-next':       { zh: '点击下一张', en: 'Next card', ru: 'Следующая' },
+  'draw-position':   { zh: '正', en: 'Upright', ru: 'Прямое' },
+  'draw-rev':        { zh: '逆', en: 'Reversed', ru: 'Перевёрнуто' },
+
+  // 分享标题
+  'share-title':     { zh: '✦ 神秘塔罗 · 占卜分享 ✦', en: '✦ Mystic Tarot · Reading Share ✦', ru: '✦ Мистическое Таро · Результат ✦' },
+  'share-from':      { zh: '✨ 由「神秘塔罗」生成', en: '✨ Generated by Mystic Tarot', ru: '✨ Создано Mystic Tarot' },
+};
+
+/** 获取 UI 文字 */
+function __(key, lang) {
+  lang = lang || _currentLang;
+  const entry = UI[key];
+  if (!entry) return key;
+  return entry[lang] || entry.zh || key;
+}

@@ -169,7 +169,7 @@ function enterDrawPhase(spreadId) {
     const hint = $('#draw-hint');
     area.innerHTML = '';
 
-    hint.textContent = `点击牌面揭开 · 共 ${spread.cardCount} 张`;
+    hint.textContent = `${__('draw-click-hint')} ${spread.cardCount} ${__('draw-cards')}`;
 
     let flippedCount = 0;
     let readingStarted = false;
@@ -235,10 +235,10 @@ function enterDrawPhase(spreadId) {
             flippedCount++;
 
             if (flippedCount >= spread.cardCount) {
-                hint.textContent = '✨ 所有牌已揭开 · 解读中……';
+                hint.textContent = __('draw-revealed');
                 setTimeout(() => showReading(), 1000);
             } else {
-                hint.textContent = `点击下一张 (${flippedCount}/${spread.cardCount})`;
+                hint.textContent = `${__('draw-next')} (${flippedCount}/${spread.cardCount})`;
             }
         });
 
@@ -353,7 +353,7 @@ function generateReadingSummary(reading) {
                     <div style="display:none;position:absolute;inset:0;align-items:center;justify-content:center;font-size:1.2rem;color:#1a1728;" class="sum-fb">${item.card.symbol}</div>
                 </div>
                 <div style="font-size:0.55rem;color:var(--text-dim);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${item.position.label}</div>
-                <div style="font-size:0.5rem;color:${item.reversed ? '#8b4480' : 'var(--gold-dark)'};">${item.reversed ? '逆' : '正'}</div>
+                <div style="font-size:0.5rem;color:${item.reversed ? '#8b4480' : 'var(--gold-dark)'};">${item.reversed ? __('draw-rev') : __('draw-position')}</div>
             </div>
         `;
     }).join('');
@@ -382,7 +382,7 @@ function generateReadingSummary(reading) {
 
             <!-- 综合解读 -->
             <div style="border-top:1px solid rgba(201,168,76,0.12);padding-top:12px;">
-                <div style="font-size:0.75rem;color:var(--gold);letter-spacing:2px;margin-bottom:6px;">✦ 全局总览 ✦</div>
+                <div style="font-size:0.75rem;color:var(--gold);letter-spacing:2px;margin-bottom:6px;">${__('summary-title')}</div>
                 <div style="font-size:0.88rem;line-height:1.9;color:var(--text-light);">
                     <p style="margin-bottom:6px;">${overview}</p>
                     <p>${elementAnalysis}</p>
@@ -394,7 +394,7 @@ function generateReadingSummary(reading) {
         <!-- 分割标题 -->
         <div style="text-align:center;margin:4px 0 16px;position:relative;">
             <div style="position:absolute;top:50%;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,rgba(201,168,76,0.2),transparent);"></div>
-            <span style="background:var(--bg-deep);position:relative;z-index:1;padding:0 12px;font-size:0.78rem;color:var(--text-dim);letter-spacing:2px;">逐牌详解</span>
+            <span style="background:var(--bg-deep);position:relative;z-index:1;padding:0 12px;font-size:0.78rem;color:var(--text-dim);letter-spacing:2px;">${__('detail-divider')}</span>
         </div>
     `;
 
@@ -438,8 +438,8 @@ function showReading() {
       <div id="reader-chat" class="reader-chat hidden">
         <div id="chat-messages" class="chat-messages"></div>
         <div class="chat-input-row">
-          <input id="chat-input" type="text" placeholder="向占卜师提问……" maxlength="100" />
-          <button id="chat-send">发送</button>
+          <input id="chat-input" type="text" placeholder="${__('chat-placeholder')}" maxlength="100" />
+          <button id="chat-send">${__('chat-send')}</button>
         </div>
       </div>
     `;
@@ -451,7 +451,7 @@ function showReading() {
     document.getElementById('btn-ask-reader').addEventListener('click', () => {
       document.getElementById('btn-ask-reader').style.display = 'none';
       document.getElementById('reader-chat').classList.remove('hidden');
-      appendMessage('assistant', '🔮 牌已为你展开，有何疑惑，尽管道来……');
+      appendMessage('assistant', __('chat-welcome'));
     });
 
     async function sendMessage() {
@@ -477,11 +477,11 @@ function showReading() {
           })
         });
         const data = await res.json();
-        const reply = data.choices?.[0]?.message?.content || '占卜师暂时无法感应，请稍后再试……';
+        const reply = data.choices?.[0]?.message?.content || __('chat-error');
         chatHistory.push({ role: 'assistant', content: reply });
         typingEl.textContent = reply;
       } catch {
-        typingEl.textContent = '占卜师暂时无法感应，请稍后再试……';
+        typingEl.textContent = __('chat-error');
       }
     }
 
@@ -546,11 +546,11 @@ function showCardDetail(card, reversed) {
     let infoGrid = `
         <div class="modal-info-grid">
             <div class="info-item">
-                <div class="ii-label">类型</div>
+                <div class="ii-label">${__('meta-type')}</div>
                 <div class="ii-value">${meta.type}</div>
             </div>
             <div class="info-item">
-                <div class="ii-label">编号</div>
+                <div class="ii-label">${__('meta-number')}</div>
                 <div class="ii-value">${card.number}</div>
             </div>
     `;
@@ -558,22 +558,22 @@ function showCardDetail(card, reversed) {
     if (card.arcana === 'minor') {
         infoGrid += `
             <div class="info-item">
-                <div class="ii-label">元素</div>
+                <div class="ii-label">${__('meta-element')}</div>
                 <div class="ii-value">${meta.element || '—'}</div>
             </div>
             <div class="info-item">
-                <div class="ii-label">灵数</div>
+                <div class="ii-label">${__('meta-numerology')}</div>
                 <div class="ii-value">${meta.numberMeaning || '—'}</div>
             </div>
         `;
     } else {
         infoGrid += `
             <div class="info-item">
-                <div class="ii-label">占星</div>
+                <div class="ii-label">${__('meta-astrology')}</div>
                 <div class="ii-value">${meta.astrology || '—'}</div>
             </div>
             <div class="info-item">
-                <div class="ii-label">希伯来</div>
+                <div class="ii-label">${__('meta-hebrew')}</div>
                 <div class="ii-value">${meta.hebrew || '—'}</div>
             </div>
         `;
@@ -599,19 +599,19 @@ function showCardDetail(card, reversed) {
         ${infoGrid}
 
         <div class="modal-section">
-            <h4>${orientationClass} 解读</h4>
+            <h4>${orientationClass} ${__('modal-reading')}</h4>
             <p>${reading.meaning}</p>
         </div>
 
         <div class="modal-section">
-            <h4>关键词</h4>
+            <h4>${__('modal-keywords')}</h4>
             <div class="modal-tags">
                 ${reading.keywords.map(k => `<span>${k}</span>`).join('')}
             </div>
         </div>
 
         <div class="modal-section" style="margin-top:8px;padding-top:12px;border-top:1px solid rgba(201,168,76,0.1);">
-            <h4>灵性启示</h4>
+            <h4>${__('modal-insight')}</h4>
             <p style="color:var(--gold-light);font-style:italic;">
                 ${card.arcana === 'major'
                     ? `大阿卡纳第 ${card.number} 号牌「${card.name}」是人生旅程中的重要课题。它邀请你深入体悟${card.keywords.slice(0,2).join('与')}的能量。`
@@ -808,7 +808,7 @@ function renderDailyCard() {
         </div>
 
         <div style="margin-top:24px;">
-            <button class="btn-gold small" onclick="showPage('page-welcome')">开始占卜 →</button>
+            <button class="btn-gold small" onclick="showPage('page-welcome')">${__('daily-start')}</button>
         </div>
     `;
 
@@ -938,7 +938,23 @@ function appendMessage(role, text) {
 }
 
 // ==================================================================
-// 12. 语言切换
+// 12. UI 文字国际化
+// ==================================================================
+function applyUILang() {
+  const lang = getLang();
+  document.title = __('title', lang);
+  // data-i18n: 替换 textContent
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    el.textContent = __(el.dataset.i18n, lang);
+  });
+  // data-i18n-placeholder: 替换 placeholder
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    el.placeholder = __(el.dataset.i18nPlaceholder, lang);
+  });
+}
+
+// ==================================================================
+// 13. 语言切换
 // ==================================================================
 document.querySelectorAll('#lang-switcher button').forEach(btn => {
   btn.addEventListener('click', () => {
@@ -948,7 +964,10 @@ document.querySelectorAll('#lang-switcher button').forEach(btn => {
     document.querySelectorAll('#lang-switcher button').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
 
-    // 重新渲染当前页面
+    // 翻译静态 UI
+    applyUILang();
+
+    // 重新渲染当前页面（动态内容）
     const activePage = document.querySelector('.page.active');
     if (!activePage) return;
     const id = activePage.id;
@@ -968,8 +987,12 @@ document.querySelectorAll('#lang-switcher button').forEach(b => {
 });
 
 // ==================================================================
-// 13. 初始化
+// 14. 初始化
 // ==================================================================
+
+// 应用UI语言
+applyUILang();
+
 console.log(`✦ 神秘塔罗 Pro 已加载 ✦`);
 console.log(`📜 共 ${TAROT_CARDS.length} 张塔罗牌 · ${SPREADS.length} 种牌阵待命`);
 
