@@ -204,6 +204,8 @@ html, body {
   letter-spacing: 12px;
   color: #c9a84c;
   font-family: serif;
+  text-align: center;
+  width: 100%;
 }
 
 .logo-tagline {
