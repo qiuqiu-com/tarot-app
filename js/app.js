@@ -948,7 +948,54 @@ function appendMessage(role, text) {
 }
 
 // ==================================================================
-// 12. UI 文字国际化
+// 12. 就地刷新解读页文字（不销毁 DOM，保留聊天）
+// ==================================================================
+function refreshReadingText() {
+  if (!currentReading) return;
+  const items = document.querySelectorAll('.reading-card-item');
+  const cards = currentReading.cards;
+
+  // 更新每张牌的解读卡片
+  items.forEach((el, i) => {
+    if (i >= cards.length) return;
+    const item = cards[i];
+    const r = getCardReading(item.card, item.reversed);
+    const meta = getCardMeta(item.card);
+
+    const posLabel = el.querySelector('.rci-position');
+    const posDesc = el.querySelector('.rci-position-desc');
+    const cardName = el.querySelector('.rci-card-name');
+    const cardSub = el.querySelector('.rci-card-sub');
+    const orient = el.querySelector('.rci-orientation');
+    const meaning = el.querySelector('.rci-meaning');
+    const tags = el.querySelector('.rci-tags');
+
+    if (posLabel) posLabel.textContent = __(item.position.labelKey);
+    if (posDesc) posDesc.textContent = item.position.descKey ? __(item.position.descKey) : '';
+    if (cardName) cardName.innerHTML = `${t(item.card, 'name')}${getLang() === 'zh' ? ` <span style="font-weight:400;font-size:0.85rem;color:var(--text-dim);">· ${item.card.nameEn}</span>` : ''}`;
+    if (cardSub) cardSub.textContent = `${meta.typeKey && typeof __ === 'function' ? __(meta.typeKey) : meta.type} · ${meta.astrology || (meta.elementTransKey && typeof __ === 'function' ? __(meta.elementTransKey) : meta.element) || ''}`;
+    if (orient) orient.textContent = `${r.orientation} · ${item.card.number}`;
+    if (meaning) meaning.textContent = r.meaning;
+    if (tags) tags.innerHTML = r.keywords.map(k => `<span>${k}</span>`).join('');
+  });
+
+  // 更新总览区
+  const summaryDiv = document.querySelector('.reading-area > div:first-child + div');
+  if (summaryDiv) {
+    const newSummary = generateReadingSummary(currentReading);
+    summaryDiv.innerHTML = newSummary.html;
+  }
+
+  // 更新页头
+  const headerName = document.querySelector('.reading-header .spread-name');
+  if (headerName) {
+    const sid = currentReading.spread.id;
+    headerName.textContent = `✦ ${currentReading.spread.icon} ${__(SPREAD_NAMES?.[sid] || '')} ✦`;
+  }
+}
+
+// ==================================================================
+// 13. UI 文字国际化
 // ==================================================================
 function applyUILang() {
   const lang = getLang();
@@ -977,11 +1024,11 @@ document.querySelectorAll('#lang-switcher button').forEach(btn => {
     // 翻译静态 UI
     applyUILang();
 
-    // 重新渲染当前页面（动态内容）
+    // 刷新动态内容（尽量就地更新，不销毁 DOM）
     const activePage = document.querySelector('.page.active');
     if (!activePage) return;
     const id = activePage.id;
-    if (id === 'page-reading' && currentReading) showReading();
+    if (id === 'page-reading' && currentReading) refreshReadingText();
     else if (id === 'page-daily') renderDailyCard();
     else if (id === 'page-index') renderCardIndex(indexFilter, $('#index-search').value);
     else if (id === 'page-history') renderHistory();
