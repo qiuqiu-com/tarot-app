@@ -482,7 +482,9 @@ function showReading() {
           })
         });
         const data = await res.json();
-        const reply = data.choices?.[0]?.message?.content || __('chat-error');
+        let reply = data.choices?.[0]?.message?.content || __('chat-error');
+        // 过滤 AI 动作描写（轻抚牌、目光深邃等角色扮演动作）
+        reply = reply.replace(/[（(][^）)]*?[）)]/g, '').replace(/\{[^}]*\}/g, '').trim();
         chatHistory.push({ role: 'assistant', content: reply });
         // 打字机效果
         typingEl.textContent = '';
