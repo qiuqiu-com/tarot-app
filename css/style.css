@@ -186,7 +186,6 @@ html, body {
   animation: scale-swing 4s ease-in-out infinite;
   transform-origin: center top;
   filter: drop-shadow(0 0 12px rgba(201,168,76,0.5));
-  mix-blend-mode: multiply;
 }
 
 .logo-eye {
