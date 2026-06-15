@@ -465,9 +465,7 @@ function showReading() {
       const typingEl = appendMessage('assistant', '……');
 
       try {
-        const cardContext = currentReading.cards.map(item =>
-          `${item.card.name}（${item.reversed ? '逆位' : '正位'}）- ${item.position.label}`
-        ).join('\n');
+        const cardContext = buildCardContext();
 
         const res = await fetch('/api/tarot-chat', {
           method: 'POST',
@@ -918,6 +916,16 @@ function showHistoryDetail(record) {
 // ==================================================================
 // 11. 聊天辅助函数
 // ==================================================================
+
+/** 构建传给 AI 占卜师的牌阵上下文 */
+function buildCardContext() {
+  const question = currentReading?.question
+    ? `用户的占卜问题：${currentReading.question}\n\n`
+    : '';
+  return question + currentReading.cards.map(item =>
+    `${item.card.name}（${item.reversed ? '逆位' : '正位'}）- ${item.position.label}`
+  ).join('\n');
+}
 
 function appendMessage(role, text) {
   const el = document.createElement('div');
