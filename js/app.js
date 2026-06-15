@@ -319,20 +319,21 @@ function generateReadingSummary(reading) {
     let overview = '';
     const firstCard = cards[0].card;
     const lastCard = cards[cards.length - 1].card;
+    const fn = (c) => t(c, 'name');
 
     if (total === 1) {
-        overview = `本次占卜抽到了「${firstCard.name}」。${firstCard.arcana === 'major' ? '这是一张大阿卡纳牌，象征着重要的生命课题。' : ''}` +
-            `这张牌的核心讯息围绕「${firstCard.keywords.slice(0,2).join('、')}」展开。` +
+        overview = `本次占卜抽到了「${fn(firstCard)}」。${firstCard.arcana === 'major' ? '这是一张大阿卡纳牌，象征着重要的生命课题。' : ''}` +
+            `这张牌的核心讯息围绕「${t(firstCard, 'keywords').slice(0,2).join('、')}」展开。` +
             `${cards[0].reversed ? '逆位出现提示你需要以不同的视角看待这个问题。' : '正位出现意味着能量正向流动，宜顺势而为。'}`;
     } else if (total === 3) {
-        overview = `从「${cards[0].card.name}」(过去) 到「${cards[1].card.name}」(现在)，再到「${cards[2].card.name}」(未来)，` +
+        overview = `从「${fn(cards[0].card)}」(过去) 到「${fn(cards[1].card)}」(现在)，再到「${fn(cards[2].card)}」(未来)，` +
             `显示出${majorCount >= 2 ? '强大的命运轨迹，' : '一条清晰的发展脉络。'}` +
             `${cards[2].reversed ? '未来的逆位牌提醒你，结果取决于当下的选择。' : '未来的正位牌预示着积极的发展方向。'}`;
     } else if (total === 5) {
-        overview = `五张牌的配置呈现出问题的多面性。核心能量集中在「${firstCard.name}」与「${lastCard.name}」之间的对话上。` +
+        overview = `五张牌的配置呈现出问题的多面性。核心能量集中在「${fn(firstCard)}」与「${fn(lastCard)}」之间的对话上。` +
             `${reversedCount >= 2 ? '多张逆位提示需要先解决内在的阻碍。' : '正位能量为主，外部条件对你有利。'}`;
     } else if (total === 10) {
-        overview = `凯尔特十字牌阵全面展开了问题的各个层面。起始的「${firstCard.name}」描绘了核心处境，而最终的「${lastCard.name}」指向发展的归宿。` +
+        overview = `凯尔特十字牌阵全面展开了问题的各个层面。起始的「${fn(firstCard)}」描绘了核心处境，而最终的「${fn(lastCard)}」指向发展的归宿。` +
             `${majorCount >= 3 ? '多张大阿卡纳的出现表明这是你人生旅途中的重要节点。' : '小阿卡纳为主，问题更贴近日常生活的具体领域。'}` +
             `${reversedCount >= 4 ? '较多逆位牌意味着在行动之前需要深入的内省和调整。' : ''}`;
     } else {
@@ -515,7 +516,7 @@ function showReading() {
             <div class="rci-content">
                 <div class="rci-position">${item.position.label}</div>
                 <div class="rci-position-desc">${item.position.desc}</div>
-                <div class="rci-card-name">${item.card.name} <span style="font-weight:400;font-size:0.85rem;color:var(--text-dim);">· ${item.card.nameEn}</span></div>
+                <div class="rci-card-name">${t(item.card, 'name')} <span style="font-weight:400;font-size:0.85rem;color:var(--text-dim);">· ${item.card.nameEn}</span></div>
                 <div class="rci-card-sub">${meta.type} · ${meta.astrology || meta.element || ''}</div>
                 <div class="rci-orientation">${reading.orientation} · ${item.card.number}</div>
                 <div class="rci-meaning">${reading.meaning}</div>
@@ -591,7 +592,7 @@ function showCardDetail(card, reversed) {
                  loading="lazy"
                  onerror="this.style.display='none'">
         </div>
-        <div class="modal-name">${card.name}</div>
+        <div class="modal-name">${t(card, 'name')}</div>
         <div class="modal-sub">${card.nameEn} · ${orientationClass}</div>
         <div class="modal-meta">${meta.type} · 第 ${card.number} 号牌</div>
 
@@ -727,7 +728,7 @@ function renderCardIndex(filter = 'all', search = '') {
                      onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
                 <div style="display:none;position:absolute;inset:0;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(180deg,#f5f0e8,#ede4d6);color:#1a1728;padding:10px;" class="index-card-fallback">
                     ${c.arcana === 'minor' ? getSuitSvg(c.suit, 28, '#a8872e') : `<span style="font-size:1.8rem;">${c.symbol}</span>`}
-                    <div class="ic-name" style="font-size:0.65rem;margin-top:4px;">${c.name}</div>
+                    <div class="ic-name" style="font-size:0.65rem;margin-top:4px;">${t(c, 'name')}</div>
                 </div>
             </div>
         `;
@@ -789,7 +790,7 @@ function renderDailyCard() {
                      onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
                 <div style="display:none;position:absolute;inset:0;flex-direction:column;align-items:center;justify-content:center;padding:12px;" class="daily-fallback">
                     <div style="font-size:2.5rem;">${card.symbol}</div>
-                    <div style="font-size:1rem;font-weight:700;color:#1a1728;">${card.name}</div>
+                    <div style="font-size:1rem;font-weight:700;color:#1a1728;">${t(card, 'name')}</div>
                 </div>
             </div>
         </div>
@@ -937,7 +938,37 @@ function appendMessage(role, text) {
 }
 
 // ==================================================================
-// 12. 初始化
+// 12. 语言切换
+// ==================================================================
+document.querySelectorAll('#lang-switcher button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const lang = btn.dataset.lang;
+    if (lang === getLang()) return;
+    setLang(lang);
+    document.querySelectorAll('#lang-switcher button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    // 重新渲染当前页面
+    const activePage = document.querySelector('.page.active');
+    if (!activePage) return;
+    const id = activePage.id;
+    if (id === 'page-reading' && currentReading) showReading();
+    else if (id === 'page-daily') renderDailyCard();
+    else if (id === 'page-index') renderCardIndex(indexFilter, $('#index-search').value);
+    else if (id === 'page-history') renderHistory();
+    else if (id === 'page-draw') { /* 不刷新翻牌页，下次重来 */ }
+    else if (id === 'page-spread') renderSpreadGrid();
+  });
+});
+
+// 恢复上次语言
+const savedLang = getLang();
+document.querySelectorAll('#lang-switcher button').forEach(b => {
+  b.classList.toggle('active', b.dataset.lang === savedLang);
+});
+
+// ==================================================================
+// 13. 初始化
 // ==================================================================
 console.log(`✦ 神秘塔罗 Pro 已加载 ✦`);
 console.log(`📜 共 ${TAROT_CARDS.length} 张塔罗牌 · ${SPREADS.length} 种牌阵待命`);

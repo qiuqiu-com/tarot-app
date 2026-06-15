@@ -122,12 +122,15 @@ function shuffleDeck(deck) {
     return deck;
 }
 
-/** 获取牌在占卜中的解读文本 */
+/** 获取牌在占卜中的解读文本（支持多语言） */
 function getCardReading(cardData, reversed) {
+    const lang = typeof getLang === 'function' ? getLang() : 'zh';
+    const oriMap = { zh: ['逆位', '正位'], en: ['Reversed', 'Upright'], ru: ['Перевёрнуто', 'Прямое'] };
+    const ori = oriMap[lang] || oriMap.zh;
     return {
-        meaning: reversed ? cardData.meaningRev : cardData.meaningUp,
-        orientation: reversed ? '逆位' : '正位',
-        keywords: cardData.keywords
+        meaning: reversed ? t(cardData, 'meaningRev') : t(cardData, 'meaningUp'),
+        orientation: reversed ? ori[0] : ori[1],
+        keywords: t(cardData, 'keywords')
     };
 }
 
