@@ -200,10 +200,7 @@ function enterDrawPhase(spreadId) {
         wrapper.innerHTML = `
             <div class="draw-card-inner">
                 <div class="card-back-face">
-                    <div class="card-back-corner tl"></div>
-                    <div class="card-back-corner tr"></div>
-                    <div class="card-back-corner bl"></div>
-                    <div class="card-back-corner br"></div>
+                    <img src="images/card-back.png" alt="" draggable="false">
                 </div>
                 <div class="card-front-face"></div>
             </div>

@@ -467,36 +467,14 @@ html, body {
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
     border: 2px solid var(--gold);
-    background: linear-gradient(145deg, #1f1830, #2a1f42);
-    box-shadow:
-        0 4px 25px rgba(0,0,0,0.4),
-        inset 0 0 30px rgba(90,60,140,0.1);
+    background: #1a1728;
+    box-shadow: 0 4px 25px rgba(0,0,0,0.4);
     overflow: hidden;
 }
-/* 牌背花纹 — 多层同心圆曼陀罗 */
-.card-back-face::before {
-    content: ''; position: absolute;
-    inset: 6px; border-radius: 8px;
-    border: 1.5px solid rgba(201,168,76,0.2);
-    background:
-        radial-gradient(circle at 50% 50%, transparent 35%, rgba(201,168,76,0.06) 35%, rgba(201,168,76,0.06) 40%, transparent 40%),
-        radial-gradient(circle at 50% 50%, transparent 28%, rgba(201,168,76,0.04) 28%, rgba(201,168,76,0.04) 33%, transparent 33%),
-        radial-gradient(circle at 50% 50%, transparent 20%, rgba(201,168,76,0.05) 20%, rgba(201,168,76,0.05) 25%, transparent 25%),
-        radial-gradient(circle at 50% 50%, transparent 12%, rgba(201,168,76,0.04) 12%, rgba(201,168,76,0.04) 17%, transparent 17%);
+.card-back-face img {
+    width: 100%; height: 100%;
+    object-fit: cover; display: block;
 }
-.card-back-face::after {
-    content: '✦';
-    position: absolute; top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 1.6rem; opacity: 0.25;
-    color: var(--gold);
-}
-/* 四角装饰 */
-.card-back-corner { position: absolute; width: 16px; height: 16px; border-color: rgba(201,168,76,0.2); }
-.card-back-corner.tl { top: 10px; left: 10px; border-top: 1.5px solid; border-left: 1.5px solid; }
-.card-back-corner.tr { top: 10px; right: 10px; border-top: 1.5px solid; border-right: 1.5px solid; }
-.card-back-corner.bl { bottom: 10px; left: 10px; border-bottom: 1.5px solid; border-left: 1.5px solid; }
-.card-back-corner.br { bottom: 10px; right: 10px; border-bottom: 1.5px solid; border-right: 1.5px solid; }
 
 /* --- 牌面 --- */
 .card-front-face {
