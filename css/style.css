@@ -163,36 +163,65 @@ html, body {
     justify-content: center; min-height: 90vh;
 }
 
-.welcome-brand {
+/* ---------- Logo 新样式 ---------- */
+.logo-container {
     text-align: center; margin-bottom: 16px;
-}
-.welcome-brand .emblem {
-    display: inline-block;
-    width: 80px; height: 80px;
-    border: 2px solid var(--gold);
-    border-radius: 50%;
-    line-height: 76px;
-    font-size: 2.4rem;
-    margin-bottom: 16px;
-    box-shadow: 0 0 40px var(--shadow-gold), inset 0 0 30px var(--shadow-gold);
-    animation: emblemPulse 3s ease-in-out infinite;
-    background: radial-gradient(circle, rgba(201,168,76,0.08), transparent);
-}
-@keyframes emblemPulse {
-    0%, 100% { box-shadow: 0 0 25px var(--shadow-gold), inset 0 0 20px var(--shadow-gold); }
-    50% { box-shadow: 0 0 50px rgba(201,168,76,0.3), inset 0 0 35px rgba(201,168,76,0.15); }
+    padding-top: 10px;
 }
 
-.welcome-brand h1 {
-    font-size: 2.4rem; color: var(--gold);
-    letter-spacing: 8px; font-weight: 900;
-    text-shadow: 0 0 30px rgba(201,168,76,0.2);
+.logo-scale-wrap {
+    position: relative;
+    width: 100px; height: 100px;
+    margin: 0 auto 12px;
+    display: flex; align-items: center; justify-content: center;
 }
-.welcome-brand .subtitle {
+
+.logo-scale {
+    width: 100px; height: 100px;
+    position: absolute;
+    animation: scaleSpin 12s ease-in-out infinite;
+    filter: drop-shadow(0 0 15px rgba(201,168,76,0.3));
+}
+
+.logo-eye {
+    width: 80px; height: 80px;
+    position: relative;
+    z-index: 1;
+    animation: eyePulse 3s ease-in-out infinite;
+    filter: drop-shadow(0 0 20px rgba(201,168,76,0.4));
+}
+
+@keyframes scaleSpin {
+    0%, 100% { transform: rotate(0deg); opacity: 0.7; }
+    25% { transform: rotate(3deg); opacity: 0.9; }
+    50% { transform: rotate(0deg); opacity: 0.7; }
+    75% { transform: rotate(-3deg); opacity: 0.9; }
+}
+
+@keyframes eyePulse {
+    0%, 100% { filter: drop-shadow(0 0 15px rgba(201,168,76,0.3)); transform: scale(1); }
+    50% { filter: drop-shadow(0 0 30px rgba(201,168,76,0.6)); transform: scale(1.03); }
+}
+
+.logo-title {
+    font-size: 2.8rem;
+    color: var(--gold);
+    letter-spacing: 12px;
+    font-weight: 900;
+    text-shadow: 0 0 30px rgba(201,168,76,0.25);
+    line-height: 1.2;
+    margin-bottom: 8px;
+}
+
+.logo-tagline {
     font-family: 'Cormorant Garamond', serif;
-    font-style: italic; font-size: 1rem;
-    color: var(--text-dim); letter-spacing: 6px;
-    margin-top: 6px;
+    font-style: italic;
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    letter-spacing: 3px;
+    line-height: 1.5;
+    max-width: 260px;
+    margin: 0 auto;
 }
 
 /* 问题输入框 */

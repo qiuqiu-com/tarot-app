@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- 外圈 -->
+  <circle cx="100" cy="100" r="90" stroke="url(#gold)" stroke-width="4" fill="none"/>
+  <circle cx="100" cy="100" r="82" stroke="url(#gold)" stroke-width="1" fill="none" opacity="0.4"/>
+  <!-- 眼白 -->
+  <ellipse cx="100" cy="95" rx="45" ry="38" stroke="url(#gold)" stroke-width="3" fill="none"/>
+  <!-- 虹膜外圈 -->
+  <circle cx="100" cy="95" r="22" stroke="url(#gold)" stroke-width="2.5" fill="none"/>
+  <!-- 虹膜内圈 -->
+  <circle cx="100" cy="95" r="16" stroke="url(#gold)" stroke-width="1.5" fill="none" opacity="0.6"/>
+  <!-- 瞳孔 -->
+  <circle cx="100" cy="95" r="5" fill="url(#gold)"/>
+  <!-- 上眼睫毛 -->
+  <path d="M55 85 Q70 65 100 68 Q130 65 145 85" stroke="url(#gold)" stroke-width="2.5" fill="none"/>
+  <!-- 下眼睫毛 -->
+  <path d="M55 105 Q70 120 100 118 Q130 120 145 105" stroke="url(#gold)" stroke-width="2" fill="none"/>
+  <!-- 瞳孔放射线 -->
+  <line x1="100" y1="79" x2="100" y2="73" stroke="url(#gold)" stroke-width="1" opacity="0.5"/>
+  <line x1="100" y1="111" x2="100" y2="117" stroke="url(#gold)" stroke-width="1" opacity="0.5"/>
+  <line x1="84" y1="95" x2="78" y2="95" stroke="url(#gold)" stroke-width="1" opacity="0.5"/>
+  <line x1="116" y1="95" x2="122" y2="95" stroke="url(#gold)" stroke-width="1" opacity="0.5"/>
+  <line x1="89" y1="84" x2="84" y2="79" stroke="url(#gold)" stroke-width="1" opacity="0.5"/>
+  <line x1="111" y1="84" x2="116" y2="79" stroke="url(#gold)" stroke-width="1" opacity="0.5"/>
+  <line x1="89" y1="106" x2="84" y2="111" stroke="url(#gold)" stroke-width="1" opacity="0.5"/>
+  <line x1="111" y1="106" x2="116" y2="111" stroke="url(#gold)" stroke-width="1" opacity="0.5"/>
+  <!-- 瞳孔上方光点 -->
+  <circle cx="95" cy="90" r="3" fill="url(#gold)" opacity="0.4"/>
+  <!-- 装饰角 -->
+  <path d="M10 10 L30 10 L30 12 L12 12 L12 30 L10 30 Z" fill="url(#gold)" opacity="0.6"/>
+  <path d="M190 10 L170 10 L170 12 L188 12 L188 30 L190 30 Z" fill="url(#gold)" opacity="0.6"/>
+  <path d="M10 190 L30 190 L30 188 L12 188 L12 170 L10 170 Z" fill="url(#gold)" opacity="0.6"/>
+  <path d="M190 190 L170 190 L170 188 L188 188 L188 170 L190 170 Z" fill="url(#gold)" opacity="0.6"/>
+  <!-- 额头上方千年眼符号 -->
+  <circle cx="100" cy="48" r="6" stroke="url(#gold)" stroke-width="1.5" fill="none"/>
+  <circle cx="100" cy="48" r="2.5" fill="url(#gold)"/>
+  <defs>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#c9a84c"/>
+      <stop offset="50%" stop-color="#f0d68a"/>
+      <stop offset="100%" stop-color="#a8872e"/>
+    </linearGradient>
+  </defs>
+</svg>
