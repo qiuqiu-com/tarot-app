@@ -222,14 +222,14 @@ function enterDrawPhase(spreadId) {
             const revBadge = item.reversed ? `<span style="position:absolute;bottom:6px;right:6px;background:rgba(139,68,128,0.85);color:#fff;font-size:0.55rem;padding:2px 8px;border-radius:8px;letter-spacing:1px;z-index:2;">▼ ${__('draw-rev')}</span>` : '';
             const frontHtml = `
                 <img src="${imgUrl}"
-                     alt="${item.card.name} - ${item.card.nameEn}"
+                     alt="${t(item.card, 'name')}"
                      class="card-image"
                      style="width:100%;height:100%;object-fit:cover;border-radius:8px;display:block;"
                      loading="lazy"
                      onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
                 <div style="display:none;position:absolute;inset:0;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(180deg,#f5f0e8,#ede4d6);color:#1a1728;padding:10px;border-radius:8px;">
                     <div style="font-size:1.8rem;">${item.card.symbol}</div>
-                    <div style="font-size:0.85rem;font-weight:700;margin-top:4px;">${item.card.name}</div>
+                    <div style="font-size:0.85rem;font-weight:700;margin-top:4px;">${t(item.card, 'name')}</div>
                 </div>
                 ${revBadge}
             `;
@@ -350,7 +350,7 @@ function generateReadingSummary(reading) {
         return `
             <div style="text-align:center;flex:1;min-width:0;position:relative;">
                 <div style="width:100%;aspect-ratio:2/3;border-radius:4px;overflow:hidden;border:1.5px solid ${item.reversed ? '#8b4480' : 'var(--gold)'};background:#ede4d6;position:relative;">
-                    <img src="${imgUrl}" alt="${item.card.name}" loading="lazy"
+                    <img src="${imgUrl}" alt="${t(item.card, 'name')}" loading="lazy"
                          style="width:100%;height:100%;object-fit:cover;display:block;"
                          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
                     <div style="display:none;position:absolute;inset:0;align-items:center;justify-content:center;font-size:1.2rem;color:#1a1728;" class="sum-fb">${item.card.symbol}</div>
@@ -524,7 +524,7 @@ function showReading() {
 
         div.innerHTML = `
             <div class="rci-mini ${item.reversed ? 'reversed' : ''}" style="position:relative;overflow:hidden;">
-                <img src="${imgUrl}" alt="${item.card.name}" loading="lazy"
+                <img src="${imgUrl}" alt="${t(item.card, 'name')}" loading="lazy"
                      style="width:100%;height:100%;object-fit:cover;border-radius:5px;position:absolute;inset:0;"
                      onerror="this.style.display='none'">
                 <div style="display:none;position:absolute;inset:0;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(180deg,#f5f0e8,#ede4d6);color:#1a1728;" class="mini-fallback">
@@ -605,7 +605,7 @@ function showCardDetail(card, reversed) {
         <button class="modal-close" id="modal-close-btn">✕</button>
         <!-- 卡牌大图 -->
         <div style="text-align:center;margin:-28px -24px 16px;border-radius:18px 18px 0 0;overflow:hidden;max-height:340px;background:linear-gradient(180deg,#f5f0e8,#ede4d6);">
-            <img src="${imgUrl}" alt="${card.name}"
+            <img src="${imgUrl}" alt="${t(card, 'name')}"
                  style="width:auto;height:280px;object-fit:contain;display:block;margin:0 auto;"
                  loading="lazy"
                  onerror="this.style.display='none'">
@@ -809,7 +809,7 @@ function renderDailyCard() {
 
         <div class="daily-card-display" id="daily-card-click">
             <div style="width:var(--card-w);height:var(--card-h);margin:0 auto;border-radius:var(--radius);overflow:hidden;border:2px solid var(--gold);box-shadow:0 8px 40px rgba(201,168,76,0.15);position:relative;background:linear-gradient(180deg,#f5f0e8,#ede4d6);">
-                <img src="${getCardImageUrl(card)}" alt="${card.name}"
+                <img src="${getCardImageUrl(card)}" alt="${t(card, 'name')}"
                      style="width:100%;height:100%;object-fit:cover;display:block;"
                      loading="lazy"
                      onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
@@ -896,14 +896,14 @@ function showHistoryDetail(record) {
 
     let cardsHtml = record.cards.map(c => {
         const card = getCardById(c.cardId);
-        const meaning = c.meaning || (card ? (c.reversed ? card.meaningRev : card.meaningUp) : '');
+        const meaning = c.meaning || (card ? (c.reversed ? t(card, 'meaningRev') : t(card, 'meaningUp')) : '');
         const meta = card ? getCardMeta(card) : { type: '', astrology: '', element: '' };
         const orientation = c.reversed ? __('draw-rev') : __('draw-upright');
         const imgUrl = card ? getCardImageUrl(card) : '';
         return `
             <div class="reading-card-item" style="margin-bottom:10px;cursor:default;">
                 <div class="rci-mini ${c.reversed ? 'reversed' : ''}" style="position:relative;overflow:hidden;">
-                    <img src="${imgUrl}" alt="${c.cardName}" loading="lazy"
+                    <img src="${imgUrl}" alt="${card ? t(card, 'name') : c.cardName}" loading="lazy"
                          style="width:100%;height:100%;object-fit:cover;border-radius:5px;position:absolute;inset:0;"
                          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
                     <div style="display:none;position:absolute;inset:0;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(180deg,#f5f0e8,#ede4d6);color:#1a1728;" class="hf">
@@ -949,7 +949,7 @@ function buildCardContext() {
     ? `${__('q-label')}：${currentReading.question}\n\n`
     : '';
   return question + currentReading.cards.map(item =>
-    `${item.card.name}（${item.reversed ? '逆位' : '正位'}）- ${item.position.label}`
+    `${t(item.card, 'name')}（${item.reversed ? __('draw-rev') : __('draw-upright')}）- ${__(item.position.labelKey)}`
   ).join('\n');
 }
 
