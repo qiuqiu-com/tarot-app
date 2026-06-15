@@ -476,7 +476,8 @@ function showReading() {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             messages: chatHistory,
-            cardContext
+            cardContext,
+            language: getLang()
           })
         });
         const data = await res.json();
