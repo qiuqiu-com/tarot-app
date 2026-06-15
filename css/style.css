@@ -237,6 +237,7 @@ html, body {
   letter-spacing: 2px;
   color: rgba(201,168,76,0.6);
   font-family: serif;
+  text-align: center;
 }
 
 @keyframes scale-swing {
