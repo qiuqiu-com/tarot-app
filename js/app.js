@@ -81,17 +81,21 @@ $$('.btn-back').forEach(btn => {
 // ==================================================================
 function renderSpreadGrid() {
     const grid = $('#spread-grid');
-    grid.innerHTML = SPREADS.map(s => `
+    grid.innerHTML = SPREADS.map(s => {
+        const spName = __(SPREAD_NAMES?.[s.id] || s.name);
+        const spDesc = __(SPREAD_DESCS?.[s.id] || s.desc);
+        const posLabels = s.positions.map(p => __(p.labelKey));
+        return `
         <div class="spread-card" data-spread="${s.id}">
             <div class="spread-icon">${s.icon}</div>
             <div class="spread-info">
-                <h3>${s.name}</h3>
-                <p>${s.desc}</p>
-                <div class="card-count">${s.cardCount} 张牌 · ${s.positions.map(p => p.label).join(' · ')}</div>
+                <h3>${spName}</h3>
+                <p>${spDesc}</p>
+                <div class="card-count">${s.cardCount} ${__('card-count')}${__('cards-and')}${posLabels.join(' · ')}</div>
             </div>
             <div class="spread-arrow">›</div>
         </div>
-    `).join('');
+    `}).join('');
 
     grid.querySelectorAll('.spread-card').forEach(el => {
         el.addEventListener('click', () => {
@@ -288,28 +292,29 @@ function generateReadingSummary(reading) {
 
     // 决定主要能量
     const energyTraits = [];
-    if (majorCount > total / 2) energyTraits.push('大阿卡纳主导 — 强烈的命运力量在运作，这是重要的人生课题时刻');
-    if (reversedCount > total / 2) energyTraits.push('逆位偏多 — 能量受阻或需要内省，建议放慢节奏');
-    if (uprightCount > total / 2 && uprightCount > reversedCount) energyTraits.push('正位为主 — 能量流通顺畅，适合采取行动');
+    if (majorCount > total / 2) energyTraits.push(__('overview-major'));
+    if (reversedCount > total / 2) energyTraits.push(__('overview-rev'));
+    if (uprightCount > total / 2 && uprightCount > reversedCount) energyTraits.push(__('overview-upright'));
 
     // 元素分析
+    const elemKeys = { wands: 'elem-fire', cups: 'elem-water', swords: 'elem-air', pentacles: 'elem-earth' };
     const presentElements = Object.entries(suitMap)
         .filter(([_, count]) => count > 0)
-        .map(([suit, count]) => `${elementNames[suit]}×${count}`);
+        .map(([suit, count]) => `${__(elemKeys[suit])}×${count}`);
 
     let elementAnalysis = '';
     if (presentElements.length === 0) {
-        elementAnalysis = '大阿卡纳集中，元素能量超越四元素的范畴——这是超越日常的精神力量在主导。';
+        elementAnalysis = __('overview-only-major');
     } else if (presentElements.length === 1) {
         const suit = Object.entries(suitMap).find(([_, c]) => c > 0)[0];
-        const el = elementNames[suit];
-        const elNature = { wands: '行动与创造的火热能量', cups: '情感与直觉的流动力量',
-            swords: '思想与挑战的风暴之力', pentacles: '物质与事业的坚实根基' };
-        elementAnalysis = `${el}元素(${elNature[suit]})占据主导，问题的核心围绕这一领域展开。`;
+        const el = __(elemKeys[suit]);
+        const elNatureKeys = { wands: 'elem-fire-nature', cups: 'elem-water-nature',
+            swords: 'elem-air-nature', pentacles: 'elem-earth-nature' };
+        elementAnalysis = `${el}${__(elNatureKeys[suit])}${__('overview-elem1')}`;
     } else if (presentElements.length === 2) {
-        elementAnalysis = `${presentElements.join('、')}——两股能量在交织作用，需要找到平衡点。`;
+        elementAnalysis = `${presentElements.join('、')}${__('overview-elem2')}`;
     } else if (presentElements.length >= 3) {
-        elementAnalysis = `${presentElements.join('、')}——多种能量汇聚，局面复杂但充满可能性。`;
+        elementAnalysis = `${presentElements.join('、')}${__('overview-elem3')}`;
     }
 
     // 核心主题
@@ -322,23 +327,24 @@ function generateReadingSummary(reading) {
     const fn = (c) => t(c, 'name');
 
     if (total === 1) {
-        overview = `本次占卜抽到了「${fn(firstCard)}」。${firstCard.arcana === 'major' ? '这是一张大阿卡纳牌，象征着重要的生命课题。' : ''}` +
-            `这张牌的核心讯息围绕「${t(firstCard, 'keywords').slice(0,2).join('、')}」展开。` +
-            `${cards[0].reversed ? '逆位出现提示你需要以不同的视角看待这个问题。' : '正位出现意味着能量正向流动，宜顺势而为。'}`;
+        overview = t(firstCard, 'keywords').slice(0,2);
+        overview = `${__('overview-1card')}「${fn(firstCard)}」。${firstCard.arcana === 'major' ? __('overview-1major') : ''}` +
+            `${__('overview-1card2')}「${overview.join('、')}」。` +
+            `${cards[0].reversed ? __('overview-1rev') : __('overview-1up')}`;
     } else if (total === 3) {
-        overview = `从「${fn(cards[0].card)}」(过去) 到「${fn(cards[1].card)}」(现在)，再到「${fn(cards[2].card)}」(未来)，` +
-            `显示出${majorCount >= 2 ? '强大的命运轨迹，' : '一条清晰的发展脉络。'}` +
-            `${cards[2].reversed ? '未来的逆位牌提醒你，结果取决于当下的选择。' : '未来的正位牌预示着积极的发展方向。'}`;
+        overview = `${__('overview-3from')}${fn(cards[0].card)}${__('overview-3to')}${fn(cards[1].card)}${__('overview-3to2')}${fn(cards[2].card)}${__('overview-3to3')}` +
+            `${majorCount >= 2 ? __('overview-3major') : __('overview-3minor')}` +
+            `${cards[2].reversed ? __('overview-3rev') : __('overview-3up')}`;
     } else if (total === 5) {
-        overview = `五张牌的配置呈现出问题的多面性。核心能量集中在「${fn(firstCard)}」与「${fn(lastCard)}」之间的对话上。` +
-            `${reversedCount >= 2 ? '多张逆位提示需要先解决内在的阻碍。' : '正位能量为主，外部条件对你有利。'}`;
+        overview = `${__('overview-5')}${fn(firstCard)}${__('overview-5and')}${fn(lastCard)}${__('overview-5end')}` +
+            `${reversedCount >= 2 ? __('overview-5rev') : __('overview-5up')}`;
     } else if (total === 10) {
-        overview = `凯尔特十字牌阵全面展开了问题的各个层面。起始的「${fn(firstCard)}」描绘了核心处境，而最终的「${fn(lastCard)}」指向发展的归宿。` +
-            `${majorCount >= 3 ? '多张大阿卡纳的出现表明这是你人生旅途中的重要节点。' : '小阿卡纳为主，问题更贴近日常生活的具体领域。'}` +
-            `${reversedCount >= 4 ? '较多逆位牌意味着在行动之前需要深入的内省和调整。' : ''}`;
+        overview = `${__('overview-10')}${fn(firstCard)}${__('overview-10mid')}${fn(lastCard)}${__('overview-10end')}` +
+            `${majorCount >= 3 ? __('overview-10major') : __('overview-10minor')}` +
+            `${reversedCount >= 4 ? __('overview-10rev') : ''}`;
     } else {
-        overview = `本次共抽出 ${total} 张牌。其中大阿卡纳 ${majorCount} 张、小阿卡纳 ${minorCount} 张，` +
-            `正位 ${uprightCount} 张、逆位 ${reversedCount} 张。${elementAnalysis}`;
+        overview = `${__('overview-gen')} ${total} ${__('overview-gen-mid')} ${majorCount} ${__('overview-gen-end')} ${minorCount} ` +
+            `${__('stat-upright')} ${uprightCount} ${__('stat-reversed')} ${reversedCount}。${elementAnalysis}`;
     }
 
     // 小卡牌缩略图行
@@ -352,8 +358,8 @@ function generateReadingSummary(reading) {
                          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
                     <div style="display:none;position:absolute;inset:0;align-items:center;justify-content:center;font-size:1.2rem;color:#1a1728;" class="sum-fb">${item.card.symbol}</div>
                 </div>
-                <div style="font-size:0.55rem;color:var(--text-dim);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${item.position.label}</div>
-                <div style="font-size:0.5rem;color:${item.reversed ? '#8b4480' : 'var(--gold-dark)'};">${item.reversed ? __('draw-rev') : __('draw-position')}</div>
+                <div style="font-size:0.55rem;color:var(--text-dim);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${__(item.position.labelKey)}</div>
+                <div style="font-size:0.5rem;color:${item.reversed ? '#8b4480' : 'var(--gold-dark)'};">${item.reversed ? __('draw-rev') : __('draw-upright')}</div>
             </div>
         `;
     }).join('');
@@ -369,9 +375,9 @@ function generateReadingSummary(reading) {
 
             <!-- 统计数据 -->
             <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;justify-content:center;">
-                <span style="background:rgba(201,168,76,0.1);color:var(--gold-light);font-size:0.7rem;padding:3px 10px;border-radius:10px;">🃏 大牌 ${majorCount}/${total}</span>
-                <span style="background:rgba(201,168,76,0.1);color:var(--gold-light);font-size:0.7rem;padding:3px 10px;border-radius:10px;">▲ 正位 ${uprightCount}</span>
-                <span style="background:rgba(139,68,128,0.15);color:#b07cb0;font-size:0.7rem;padding:3px 10px;border-radius:10px;">▼ 逆位 ${reversedCount}</span>
+                <span style="background:rgba(201,168,76,0.1);color:var(--gold-light);font-size:0.7rem;padding:3px 10px;border-radius:10px;">🃏 ${__('stat-major')} ${majorCount}${__('stat-of')}${total}</span>
+                <span style="background:rgba(201,168,76,0.1);color:var(--gold-light);font-size:0.7rem;padding:3px 10px;border-radius:10px;">${__('stat-upright')} ${uprightCount}</span>
+                <span style="background:rgba(139,68,128,0.15);color:#b07cb0;font-size:0.7rem;padding:3px 10px;border-radius:10px;">${__('stat-reversed')} ${reversedCount}</span>
                 ${presentElements.length > 0 ? `<span style="background:rgba(201,168,76,0.1);color:var(--gold-light);font-size:0.7rem;padding:3px 10px;border-radius:10px;">✦ ${presentElements.join(' ')}</span>` : ''}
             </div>
 
@@ -514,8 +520,8 @@ function showReading() {
                 </div>
             </div>
             <div class="rci-content">
-                <div class="rci-position">${item.position.label}</div>
-                <div class="rci-position-desc">${item.position.desc}</div>
+                <div class="rci-position">${__(item.position.labelKey)}</div>
+                <div class="rci-position-desc">${item.position.descKey ? __(item.position.descKey) : ''}</div>
                 <div class="rci-card-name">${t(item.card, 'name')} <span style="font-weight:400;font-size:0.85rem;color:var(--text-dim);">· ${item.card.nameEn}</span></div>
                 <div class="rci-card-sub">${meta.type} · ${meta.astrology || meta.element || ''}</div>
                 <div class="rci-orientation">${reading.orientation} · ${item.card.number}</div>
@@ -547,7 +553,7 @@ function showCardDetail(card, reversed) {
         <div class="modal-info-grid">
             <div class="info-item">
                 <div class="ii-label">${__('meta-type')}</div>
-                <div class="ii-value">${meta.type}</div>
+                <div class="ii-value">${meta.typeKey && typeof __ === 'function' ? __(meta.typeKey) : meta.type}</div>
             </div>
             <div class="info-item">
                 <div class="ii-label">${__('meta-number')}</div>
@@ -594,7 +600,7 @@ function showCardDetail(card, reversed) {
         </div>
         <div class="modal-name">${t(card, 'name')}</div>
         <div class="modal-sub">${card.nameEn} · ${orientationClass}</div>
-        <div class="modal-meta">${meta.type} · 第 ${card.number} 号牌</div>
+        <div class="modal-meta">${meta.typeKey && typeof __ === 'function' ? __(meta.typeKey) : meta.type} · ${__('meta-number')} ${card.number}</div>
 
         ${infoGrid}
 

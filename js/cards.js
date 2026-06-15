@@ -705,6 +705,7 @@ function getCardMeta(card) {
     if (card.arcana === 'major') {
         meta.type = '大阿卡纳';
         meta.typeEn = 'Major Arcana';
+        meta.typeKey = 'filter-major';
         meta.astrology = MAJOR_ASTROLOGY[card.id] || '';
         meta.hebrew = MAJOR_HEBREW[card.id] || '';
         meta.numberMeaning = '关键牌 · 人生大课题';
@@ -712,6 +713,7 @@ function getCardMeta(card) {
         const suitMeta = ELEMENT_MAP[card.suit] || {};
         meta.type = getSuitName(card.suit) + '牌组';
         meta.typeEn = card.suit.charAt(0).toUpperCase() + card.suit.slice(1);
+        meta.typeKey = 'suit-' + card.suit + '-full';
         meta.element = suitMeta.element || '';
         meta.elementNature = suitMeta.nature || '';
         meta.numberMeaning = NUMBER_MEANINGS[card.number]
@@ -723,14 +725,14 @@ function getCardMeta(card) {
 }
 
 function getSuitName(suit) {
-    const map = { wands: '权杖', cups: '圣杯', swords: '宝剑', pentacles: '星币' };
-    return map[suit] || '';
+    const map = { wands: 'suit-wands', cups: 'suit-cups', swords: 'suit-swords', pentacles: 'suit-pentacles' };
+    return typeof __ === 'function' ? __(map[suit] || '') : (map[suit] || '');
 }
 
 function getElementName(suit) {
-    const map = { wands: '火元素 · 行动与创造', cups: '水元素 · 情感与直觉',
-        swords: '风元素 · 思想与挑战', pentacles: '土元素 · 物质与事业' };
-    return map[suit] || '';
+    const map = { wands: 'elem-fire-nature', cups: 'elem-water-nature',
+        swords: 'elem-air-nature', pentacles: 'elem-earth-nature' };
+    return typeof __ === 'function' ? __(map[suit] || '') : (map[suit] || '');
 }
 
 /* ==================================================================

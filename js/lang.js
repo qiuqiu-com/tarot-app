@@ -695,32 +695,33 @@ function t(card, field, lang) {
    UI 界面文字翻译
    ================================================================== */
 const UI = {
-  // 欢迎页
+
+  // ====== 欢迎页 ======
   'title':           { zh: '塔罗', en: 'Tarot', ru: 'Таро' },
   'tagline':         { zh: '命运注视着你，但他无法将我们控制', en: 'Fate watches you, but it cannot control us', ru: 'Судьба наблюдает за тобой, но не может управлять нами' },
-  'q-label':         { zh: '▎你想问什么？（可选）', en: '▎ What is your question? (optional)', ru: '▎ Какой у вас вопрос? (необязательно)' },
-  'q-placeholder':   { zh: '例如：我最近的事业运如何……', en: 'e.g. What about my career lately...', ru: 'Например: как мои дела в карьере...' },
+  'q-label':         { zh: '▎你想问什么？（可选）', en: '▎ Your question? (optional)', ru: '▎ Ваш вопрос? (необязательно)' },
+  'q-placeholder':   { zh: '例如：我最近的事业运如何……', en: 'e.g. How is my career lately...', ru: 'Например: как моя карьера...' },
   'btn-start':       { zh: '开始占卜', en: 'Start Reading', ru: 'Начать гадание' },
   'btn-daily':       { zh: '🌅 每日塔罗', en: '🌅 Daily Card', ru: '🌅 Карта дня' },
   'btn-index':       { zh: '📖 卡牌百科', en: '📖 Card Index', ru: '📖 Все карты' },
   'btn-history':     { zh: '📋 占卜记录', en: '📋 History', ru: '📋 История' },
 
-  // 页面标题
+  // ====== 页面标题 ======
   'page-spread':     { zh: '选择牌阵', en: 'Choose a Spread', ru: 'Выберите расклад' },
-  'spread-desc':     { zh: '根据你的问题选择最合适的牌阵', en: 'Pick the spread that fits your question', ru: 'Выберите расклад, подходящий вашему вопросу' },
-  'page-shuffle':    { zh: '灵性洗牌', en: 'Spiritual Shuffle', ru: 'Духовное перемешивание' },
+  'spread-desc':     { zh: '根据你的问题选择最合适的牌阵', en: 'Pick the spread that fits your question', ru: 'Выберите расклад под ваш вопрос' },
+  'page-shuffle':    { zh: '灵性洗牌', en: 'Spiritual Shuffle', ru: 'Духовное тасование' },
   'shuffle-hint':    { zh: '集中精神 · 默念你的问题 · 深呼吸', en: 'Focus · Think of your question · Breathe', ru: 'Сосредоточься · Думай о вопросе · Дыши' },
   'page-draw':       { zh: '翻牌仪式', en: 'Reveal the Cards', ru: 'Откройте карты' },
-  'draw-hint':       { zh: '依次点击牌面，揭开命运的面纱', en: 'Click each card to reveal your fate', ru: 'Нажимайте на карты, чтобы открыть судьбу' },
+  'draw-hint':       { zh: '依次点击牌面，揭开命运的面纱', en: 'Click each card to reveal your fate', ru: 'Нажимайте карты, чтобы открыть судьбу' },
   'page-reading':    { zh: '占卜解读', en: 'Your Reading', ru: 'Ваше гадание' },
   'page-index':      { zh: '卡牌百科', en: 'Card Index', ru: 'Все карты' },
   'index-desc':      { zh: '浏览全部 78 张塔罗牌', en: 'Browse all 78 tarot cards', ru: 'Просмотр всех 78 карт Таро' },
   'page-daily':      { zh: '🌅 每日塔罗', en: '🌅 Daily Card', ru: '🌅 Карта дня' },
-  'daily-desc':      { zh: '今日的灵性指引', en: 'Today\'s spiritual guidance', ru: 'Сегодняшнее духовное руководство' },
+  'daily-desc':      { zh: '今日的灵性指引', en: "Today's spiritual guidance", ru: 'Сегодняшнее духовное руководство' },
   'page-history':    { zh: '占卜记录', en: 'Reading History', ru: 'История гаданий' },
   'history-desc':    { zh: '你的占卜旅程', en: 'Your journey through the cards', ru: 'Твой путь через карты' },
 
-  // 按钮
+  // ====== 按钮 ======
   'btn-save':        { zh: '💾 保存记录', en: '💾 Save', ru: '💾 Сохранить' },
   'btn-share':       { zh: '📤 分享解读', en: '📤 Share', ru: '📤 Поделиться' },
   'btn-redo':        { zh: '🔄 重新占卜', en: '🔄 New Reading', ru: '🔄 Новое гадание' },
@@ -728,22 +729,101 @@ const UI = {
   'btn-ask':         { zh: '🔮 询问占卜师', en: '🔮 Ask the Reader', ru: '🔮 Спросить таролога' },
   'chat-placeholder':{ zh: '向占卜师提问……', en: 'Ask the tarot reader...', ru: 'Спросите таролога...' },
   'chat-send':       { zh: '发送', en: 'Send', ru: 'Отправить' },
-  'chat-welcome':    { zh: '🔮 牌已为你展开，有何疑惑，尽管道来……', en: '🔮 The cards are laid. What weighs on your mind...', ru: '🔮 Карты раскрыты. Что тревожит тебя...' },
-  'chat-error':      { zh: '占卜师暂时无法感应，请稍后再试……', en: 'The reader cannot sense you now. Try again later...', ru: 'Таролог не может почувствовать вас сейчас. Попробуйте позже...' },
+  'chat-welcome':    { zh: '🔮 牌已为你展开，有何疑惑，尽管道来……', en: '🔮 The cards are laid. What troubles you...', ru: '🔮 Карты раскрыты. Что тревожит тебя...' },
+  'chat-error':      { zh: '占卜师暂时无法感应，请稍后再试……', en: 'The reader cannot reach you now. Try again...', ru: 'Таролог не может ответить сейчас. Попробуйте позже...' },
 
-  // 百科筛选
-  'filter-all':      { zh: '全部', en: 'All', ru: 'Все' },
-  'filter-major':    { zh: '大阿卡纳', en: 'Major Arcana', ru: 'Старшие Арканы' },
-  'filter-wands':    { zh: '权杖', en: 'Wands', ru: 'Жезлы' },
-  'filter-cups':     { zh: '圣杯', en: 'Cups', ru: 'Кубки' },
-  'filter-swords':   { zh: '宝剑', en: 'Swords', ru: 'Мечи' },
-  'filter-pentacles':{ zh: '星币', en: 'Pentacles', ru: 'Пентакли' },
+  // ====== 牌阵名称 ======
+  'sp-single':       { zh: '单张牌占卜', en: 'Single Card', ru: 'Одна карта' },
+  'sp-single-desc':  { zh: '快速解答当下的困惑，获得直观指引', en: 'Quick guidance for the moment', ru: 'Быстрый ответ на текущий вопрос' },
+  'sp-yesno':        { zh: '是非占卜', en: 'Yes / No', ru: 'Да / Нет' },
+  'sp-yesno-desc':   { zh: '明确的是非答案，适合二元选择问题', en: 'Clear yes/no for binary questions', ru: 'Чёткий ответ на вопросы да/нет' },
+  'sp-three':        { zh: '三张牌牌阵', en: 'Three Cards', ru: 'Три карты' },
+  'sp-three-desc':   { zh: '过去 · 现在 · 未来，洞悉事件发展脉络', en: 'Past · Present · Future', ru: 'Прошлое · Настоящее · Будущее' },
+  'sp-relationship': { zh: '关系之镜', en: 'Relationship Mirror', ru: 'Зеркало отношений' },
+  'sp-rel-desc':     { zh: '深入剖析情感关系，看清双方的内心', en: 'Deep insight into relationships', ru: 'Глубокий анализ отношений' },
+  'sp-career':       { zh: '事业抉择', en: 'Career Choice', ru: 'Карьерный выбор' },
+  'sp-career-desc':  { zh: '职业发展的深度指引，看清选择的方向', en: 'Deep career guidance', ru: 'Глубокое руководство по карьере' },
+  'sp-celtic':       { zh: '凯尔特十字', en: 'Celtic Cross', ru: 'Кельтский крест' },
+  'sp-celtic-desc':  { zh: '最经典的全面牌阵，深入剖析复杂问题', en: 'Classic 10-card spread for complex issues', ru: 'Классический расклад для сложных вопросов' },
 
-  // 历史
-  'history-empty':   { zh: '✨ 还没有占卜记录<br>开始你的第一次探索吧', en: '✨ No readings yet<br>Start your first探索', ru: '✨ Ещё нет гаданий<br>Начни своё первое' },
-  'history-empty-btn':{ zh: '开始占卜', en: 'Start Reading', ru: 'Начать гадание' },
+  // ====== 牌阵位置标签 ======
+  'pos-guidance':    { zh: '当下指引', en: 'Guidance', ru: 'Руководство' },
+  'pos-guidance-d':  { zh: '此刻最需要知道的讯息', en: 'What you need to know now', ru: 'Что важно знать сейчас' },
+  'pos-answer':      { zh: '答案', en: 'Answer', ru: 'Ответ' },
+  'pos-answer-d':    { zh: '正位为"是" · 逆位为"否" · 大牌为"时机未到"', en: 'Upright=Yes · Reversed=No · Major=Not yet', ru: 'Прямое=Да · Перевёрнутое=Нет · Старший=Не время' },
+  'pos-past':        { zh: '过去', en: 'Past', ru: 'Прошлое' },
+  'pos-past-d':      { zh: '影响当前局面的根源', en: 'Root of the current situation', ru: 'Корень текущей ситуации' },
+  'pos-present':     { zh: '现在', en: 'Present', ru: 'Настоящее' },
+  'pos-present-d':   { zh: '当下的真实处境', en: 'Your current reality', ru: 'Ваша текущая реальность' },
+  'pos-future':      { zh: '未来', en: 'Future', ru: 'Будущее' },
+  'pos-future-d':    { zh: '即将到来的发展', en: 'What is coming', ru: 'Что грядёт' },
+  'pos-self':        { zh: '自己', en: 'Yourself', ru: 'Вы сами' },
+  'pos-self-d':      { zh: '你在关系中的状态', en: 'Your state in the relationship', ru: 'Ваше состояние в отношениях' },
+  'pos-other':       { zh: '对方', en: 'The Other', ru: 'Другой' },
+  'pos-other-d':     { zh: 'Ta在关系中的状态', en: 'Their state in the relationship', ru: 'Их состояние в отношениях' },
+  'pos-core':        { zh: '关系本质', en: 'Core Essence', ru: 'Суть отношений' },
+  'pos-core-d':      { zh: '这段关系的核心能量', en: 'Core energy of this bond', ru: 'Основная энергия связи' },
+  'pos-block':       { zh: '阻碍', en: 'Obstacle', ru: 'Препятствие' },
+  'pos-block-d':     { zh: '需要面对的挑战', en: 'Challenge to face', ru: 'Вызов, который нужно принять' },
+  'pos-advice':      { zh: '建议', en: 'Advice', ru: 'Совет' },
+  'pos-advice-d':    { zh: '最佳行动方向', en: 'Best course of action', ru: 'Лучший путь действий' },
+  'pos-current':     { zh: '现状', en: 'Current State', ru: 'Текущее состояние' },
+  'pos-current-d':   { zh: '当前事业的局面', en: 'Current career situation', ru: 'Текущая карьерная ситуация' },
+  'pos-opportunity': { zh: '机会', en: 'Opportunity', ru: 'Возможность' },
+  'pos-opportunity-d':{ zh: '正在靠近的可能性', en: 'Opportunity approaching', ru: 'Приближающаяся возможность' },
+  'pos-risk':        { zh: '风险', en: 'Risk', ru: 'Риск' },
+  'pos-risk-d':      { zh: '需要注意的隐患', en: 'Hidden danger to watch', ru: 'Скрытая опасность' },
+  'pos-resource':    { zh: '内在资源', en: 'Inner Resource', ru: 'Внутренний ресурс' },
+  'pos-resource-d':  { zh: '你拥有的优势', en: 'Your strength', ru: 'Ваша сила' },
+  'pos-center':      { zh: '现状', en: 'Center', ru: 'Центр' },
+  'pos-center-d':    { zh: '问题的核心能量', en: 'Core energy of the issue', ru: 'Основная энергия вопроса' },
+  'pos-cross':       { zh: '阻碍', en: 'Crossing', ru: 'Пересечение' },
+  'pos-cross-d':     { zh: '交叉的挑战', en: 'Crossing challenge', ru: 'Пересекающий вызов' },
+  'pos-foundation':  { zh: '根基', en: 'Foundation', ru: 'Основа' },
+  'pos-foundation-d':{ zh: '问题的深层根源', en: 'Deep root of the issue', ru: 'Глубокий корень вопроса' },
+  'pos-recent':      { zh: '过往', en: 'Recent Past', ru: 'Недавнее прошлое' },
+  'pos-recent-d':    { zh: '近期的影响因素', en: 'Recent influences', ru: 'Недавние влияния' },
+  'pos-goal':        { zh: '目标', en: 'Goal', ru: 'Цель' },
+  'pos-goal-d':      { zh: '你意识层面的追求', en: 'Your conscious aim', ru: 'Ваша сознательная цель' },
+  'pos-near':        { zh: '未来', en: 'Near Future', ru: 'Ближайшее будущее' },
+  'pos-near-d':      { zh: '即将展现的局面', en: 'What will unfold soon', ru: 'Что скоро проявится' },
+  'pos-attitude':    { zh: '自我', en: 'Attitude', ru: 'Отношение' },
+  'pos-attitude-d':  { zh: '你内心的真实态度', en: 'Your inner attitude', ru: 'Ваше внутреннее отношение' },
+  'pos-environment': { zh: '环境', en: 'Environment', ru: 'Окружение' },
+  'pos-environment-d':{ zh: '他人与外界的影响', en: 'External influences', ru: 'Внешние влияния' },
+  'pos-hopefear':    { zh: '希望与恐惧', en: 'Hope & Fear', ru: 'Надежда и страх' },
+  'pos-hopefear-d':  { zh: '内心的期待与不安', en: 'Inner hopes and fears', ru: 'Внутренние надежды и страхи' },
+  'pos-outcome':     { zh: '结果', en: 'Outcome', ru: 'Итог' },
+  'pos-outcome-d':   { zh: '最终的发展走向', en: 'Final outcome', ru: 'Конечный результат' },
+  'pos-advice-d2':   { zh: '促进关系的方向', en: 'Direction to improve', ru: 'Направление для улучшения' },
 
-  // 模态标签
+  // ====== 元素与花色 ======
+  'suit-wands':    { zh: '权杖', en: 'Wands', ru: 'Жезлы' },
+  'suit-cups':     { zh: '圣杯', en: 'Cups', ru: 'Кубки' },
+  'suit-swords':   { zh: '宝剑', en: 'Swords', ru: 'Мечи' },
+  'suit-pentacles':{ zh: '星币', en: 'Pentacles', ru: 'Пентакли' },
+  'suit-wands-full':{ zh: '权杖牌组', en: 'Wands', ru: 'Жезлы' },
+  'suit-cups-full': { zh: '圣杯牌组', en: 'Cups', ru: 'Кубки' },
+  'suit-swords-full':{ zh: '宝剑牌组', en: 'Swords', ru: 'Мечи' },
+  'suit-pentacles-full':{ zh: '星币牌组', en: 'Pentacles', ru: 'Пентакли' },
+  'elem-fire':     { zh: '火', en: 'Fire', ru: 'Огонь' },
+  'elem-water':    { zh: '水', en: 'Water', ru: 'Вода' },
+  'elem-air':      { zh: '风', en: 'Air', ru: 'Воздух' },
+  'elem-earth':    { zh: '土', en: 'Earth', ru: 'Земля' },
+  'elem-fire-nature': { zh: '火元素 · 行动与创造', en: 'Fire · Action & Creation', ru: 'Огонь · Действие и творчество' },
+  'elem-water-nature':{ zh: '水元素 · 情感与直觉', en: 'Water · Emotion & Intuition', ru: 'Вода · Эмоции и интуиция' },
+  'elem-air-nature':  { zh: '风元素 · 思想与挑战', en: 'Air · Thought & Challenge', ru: 'Воздух · Мысль и вызов' },
+  'elem-earth-nature':{ zh: '土元素 · 物质与事业', en: 'Earth · Material & Career', ru: 'Земля · Материя и карьера' },
+
+  // ====== 统计 ======
+  'stat-major':    { zh: '大牌', en: 'Major', ru: 'Старшие' },
+  'stat-upright':  { zh: '▲ 正位', en: '▲ Upright', ru: '▲ Прямое' },
+  'stat-reversed': { zh: '▼ 逆位', en: '▼ Reversed', ru: '▼ Перевёрнуто' },
+  'stat-of':       { zh: '/', en: '/', ru: '/' },
+  'card-count':    { zh: '张牌', en: 'cards', ru: 'карт' },
+  'cards-and':     { zh: ' · ', en: ' · ', ru: ' · ' },
+
+  // ====== 模态标签 ======
   'meta-type':       { zh: '类型', en: 'Type', ru: 'Тип' },
   'meta-number':     { zh: '编号', en: 'Number', ru: 'Номер' },
   'meta-element':    { zh: '元素', en: 'Element', ru: 'Стихия' },
@@ -754,27 +834,71 @@ const UI = {
   'modal-keywords':  { zh: '关键词', en: 'Keywords', ru: 'Ключевые слова' },
   'modal-insight':   { zh: '灵性启示', en: 'Spiritual Insight', ru: 'Духовное прозрение' },
 
-  // 总览
+  // ====== 总览 ======
   'summary-title':   { zh: '✦ 全局总览 ✦', en: '✦ Overview ✦', ru: '✦ Общий обзор ✦' },
   'detail-divider':  { zh: '逐牌详解', en: 'Card Details', ru: 'Детали карт' },
+  'overview-major':  { zh: '大阿卡纳主导 — 强烈的命运力量在运作，这是重要的人生课题时刻', en: 'Major Arcana dominates — fate is at work, a significant life lesson', ru: 'Старшие Арканы доминируют — судьба в действии, важный жизненный урок' },
+  'overview-rev':    { zh: '逆位偏多 — 能量受阻或需要内省，建议放慢节奏', en: 'Many reversals — energy is blocked, pause and reflect', ru: 'Много перевёрнутых — энергия заблокирована, остановись' },
+  'overview-upright':{ zh: '正位为主 — 能量流通顺畅，适合采取行动', en: 'Mostly upright — energy flows, take action', ru: 'Большинство прямых — энергия течёт, действуй' },
+  'overview-only-major':{ zh: '大阿卡纳集中，元素能量超越四元素的范畴——这是超越日常的精神力量在主导。', en: 'Major Arcana集中 — elemental energy transcends the four suits. Spiritual forces beyond the everyday are at work.', ru: 'Старшие Арканы доминируют — энергия стихий за пределами четырёх мастей. Духовные силы в действии.' },
+  'overview-elem1':  { zh: '元素占据主导，问题的核心围绕这一领域展开。', en: ' energy dominates. The core of the issue revolves around this realm.', ru: ' стихия доминирует. Суть вопроса вращается вокруг этой сферы.' },
+  'overview-elem2':  { zh: '——两股能量在交织作用，需要找到平衡点。', en: ' — two energies intertwine. Balance is needed.', ru: ' — две энергии переплетаются. Нужен баланс.' },
+  'overview-elem3':  { zh: '——多种能量汇聚，局面复杂但充满可能性。', en: ' — multiple energies converge. Complex but full of possibility.', ru: ' — множество энергий сходятся. Сложно, но полно возможностей.' },
+  'overview-1major':{ zh: '这是一张大阿卡纳牌，象征着重要的生命课题。', en: 'This is a Major Arcana card — a significant life lesson.', ru: 'Это Старший Аркан — важный жизненный урок.' },
+  'overview-1card':  { zh: '本次占卜抽到了', en: 'Your card today is', ru: 'Ваша карта сегодня' },
+  'overview-1card2': { zh: '这张牌的核心讯息围绕', en: 'Its核心 message revolves around', ru: 'Её ключевое послание вращается вокруг' },
+  'overview-1rev':   { zh: '逆位出现提示你需要以不同的视角看待这个问题。', en: 'Reversed — see this from a different angle.', ru: 'Перевёрнуто — взгляни под другим углом.' },
+  'overview-1up':    { zh: '正位出现意味着能量正向流动，宜顺势而为。', en: 'Upright — energy flows, go with it.', ru: 'Прямое — энергия течёт, следуй за ней.' },
+  'overview-3from':  { zh: '从「', en: 'From 「', ru: 'От 「' },
+  'overview-3to':    { zh: '」(过去) 到「', en: '」(Past) to 「', ru: '」(Прошлое) к 「' },
+  'overview-3to2':   { zh: '」(现在)，再到「', en: '」(Present) to 「', ru: '」(Настоящее) к 「' },
+  'overview-3to3':   { zh: '」(未来)，', en: '」(Future) — ', ru: '」(Будущее) — ' },
+  'overview-3major': { zh: '显示出强大的命运轨迹，', en: 'shows a powerful fate line,', ru: 'показывает мощную линию судьбы,' },
+  'overview-3minor': { zh: '显示出一条清晰的发展脉络。', en: 'shows a clear development path.', ru: 'показывает ясный путь развития.' },
+  'overview-3rev':   { zh: '未来的逆位牌提醒你，结果取决于当下的选择。', en: 'Future reversed: the outcome depends on choices now.', ru: 'Будущее перевёрнуто: итог зависит от выбора сейчас.' },
+  'overview-3up':    { zh: '未来的正位牌预示着积极的发展方向。', en: 'Future upright: positive direction ahead.', ru: 'Будущее прямое: позитивное направление.' },
+  'overview-5':      { zh: '五张牌的配置呈现出问题的多面性。核心能量集中在「', en: 'Five cards show the issue\'s many facets. Core energy centers on 「', ru: 'Пять карт показывают многогранность вопроса. Энергия сосредоточена на 「' },
+  'overview-5and':   { zh: '」与「', en: '」 and 「', ru: '」 и 「' },
+  'overview-5end':   { zh: '」之间的对话上。', en: '」之间的对话上。', ru: '」之间的对话上。' },
+  'overview-5rev':   { zh: '多张逆位提示需要先解决内在的阻碍。', en: 'Several reversals: clear inner blocks first.', ru: 'Несколько перевёрнутых: сначала убери внутренние блоки.' },
+  'overview-5up':    { zh: '正位能量为主，外部条件对你有利。', en: 'Mostly upright: external conditions favor you.', ru: 'В основном прямые: внешние условия благоприятны.' },
+  'overview-10':     { zh: '凯尔特十字牌阵全面展开了问题的各个层面。起始的「', en: 'The Celtic Cross unfolds all layers. Beginning with 「', ru: 'Кельтский крест раскрывает все слои. Начиная с 「' },
+  'overview-10mid':  { zh: '」描绘了核心处境，而最终的「', en: '」 describes the core, and finally 「', ru: '」 описывает суть, и наконец 「' },
+  'overview-10end':  { zh: '」指向发展的归宿。', en: '」指向发展的归宿。', ru: '」指向发展的归宿。' },
+  'overview-10major':{ zh: '多张大阿卡纳的出现表明这是你人生旅途中的重要节点。', en: 'Many Major Arcana: a key milestone on your life journey.', ru: 'Много Старших Арканов: ключевая веха на твоём пути.' },
+  'overview-10minor':{ zh: '小阿卡纳为主，问题更贴近日常生活的具体领域。', en: 'Minor Arcana为主, the issue is rooted in daily life.', ru: 'Младшие Арканы — вопрос в повседневной жизни.' },
+  'overview-10rev':  { zh: '较多逆位牌意味着在行动之前需要深入的内省和调整。', en: 'Many reversals: deep introspection needed before action.', ru: 'Много перевёрнутых: нужна глубокая рефлексия.' },
+  'overview-gen':    { zh: '本次共抽出', en: 'Total cards drawn:', ru: 'Всего карт:' },
+  'overview-gen-mid':{ zh: '张牌。其中大阿卡纳', en: ' — Major Arcana:', ru: ' — Старшие Арканы:' },
+  'overview-gen-end':{ zh: '张、小阿卡纳', en: ', Minor:', ru: ', Младшие:' },
 
-  // 每日塔罗
-  'daily-start':     { zh: '开始占卜 →', en: 'Start Reading →', ru: 'Начать гадание →' },
+  // ====== 翻牌 ======
+  'draw-click':     { zh: '点击牌面揭开 · 共', en: 'Click to reveal ·', ru: 'Нажмите, чтобы открыть ·' },
+  'draw-cards':     { zh: '张', en: 'cards', ru: 'карт' },
+  'draw-revealed':  { zh: '✨ 所有牌已揭开 · 解读中……', en: '✨ All revealed · Reading...', ru: '✨ Все открыты · Чтение...' },
+  'draw-next':      { zh: '点击下一张', en: 'Next card', ru: 'Следующая' },
+  'draw-upright':   { zh: '正', en: 'U', ru: 'П' },
+  'draw-rev':       { zh: '逆', en: 'R', ru: 'Пв' },
 
-  // 占卜师聊天
-  'reader-title':    { zh: '✦ 全局总览 ✦', en: '✦ Overview ✦', ru: '✦ Общий обзор ✦' },
+  // ====== 百科筛选 ======
+  'filter-all':      { zh: '全部', en: 'All', ru: 'Все' },
+  'filter-major':    { zh: '大阿卡纳', en: 'Major Arcana', ru: 'Старшие Арканы' },
+  'filter-wands':    { zh: '权杖', en: 'Wands', ru: 'Жезлы' },
+  'filter-cups':     { zh: '圣杯', en: 'Cups', ru: 'Кубки' },
+  'filter-swords':   { zh: '宝剑', en: 'Swords', ru: 'Мечи' },
+  'filter-pentacles':{ zh: '星币', en: 'Pentacles', ru: 'Пентакли' },
 
-  // 翻牌
-  'draw-click-hint': { zh: '点击牌面揭开 · 共', en: 'Click to reveal ·', ru: 'Нажмите, чтобы открыть ·' },
-  'draw-cards':      { zh: '张', en: 'cards', ru: 'карт' },
-  'draw-revealed':   { zh: '✨ 所有牌已揭开 · 解读中……', en: '✨ All cards revealed · Reading...', ru: '✨ Все карты открыты · Чтение...' },
-  'draw-next':       { zh: '点击下一张', en: 'Next card', ru: 'Следующая' },
-  'draw-position':   { zh: '正', en: 'Upright', ru: 'Прямое' },
-  'draw-rev':        { zh: '逆', en: 'Reversed', ru: 'Перевёрнуто' },
+  // ====== 历史 ======
+  'history-empty':    { zh: '✨ 还没有占卜记录<br>开始你的第一次探索吧', en: '✨ No readings yet<br>Start your first journey', ru: '✨ Ещё нет гаданий<br>Начни своё первое' },
+  'history-empty-btn':{ zh: '开始占卜', en: 'Start Reading', ru: 'Начать гадание' },
 
-  // 分享标题
-  'share-title':     { zh: '✦ 神秘塔罗 · 占卜分享 ✦', en: '✦ Mystic Tarot · Reading Share ✦', ru: '✦ Мистическое Таро · Результат ✦' },
+  // ====== 分享 ======
+  'share-title':     { zh: '✦ 神秘塔罗 · 占卜分享 ✦', en: '✦ Mystic Tarot · Reading ✦', ru: '✦ Мистическое Таро · Результат ✦' },
   'share-from':      { zh: '✨ 由「神秘塔罗」生成', en: '✨ Generated by Mystic Tarot', ru: '✨ Создано Mystic Tarot' },
+
+  // ====== 占卜师 ======
+  'reader-thinking': { zh: '……', en: '……', ru: '……' },
+  'reader-reply-fail':{ zh: '占卜师暂时无法感应，请稍后再试……', en: 'The reader cannot reach you now...', ru: 'Таролог не может ответить сейчас...' },
 };
 
 /** 获取 UI 文字 */
