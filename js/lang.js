@@ -698,6 +698,40 @@ function t(card, field, lang) {
 }
 
 /* ==================================================================
+   占星名称翻译
+   ================================================================== */
+const ASTRO_NAMES = {
+  0:  { en: 'Uranus ♅', ru: 'Уран ♅' },
+  1:  { en: 'Mercury ☿', ru: 'Меркурий ☿' },
+  2:  { en: 'Moon ☽', ru: 'Луна ☽' },
+  3:  { en: 'Venus ♀', ru: 'Венера ♀' },
+  4:  { en: 'Aries ♈', ru: 'Овен ♈' },
+  5:  { en: 'Taurus ♉', ru: 'Телец ♉' },
+  6:  { en: 'Gemini ♊', ru: 'Близнецы ♊' },
+  7:  { en: 'Cancer ♋', ru: 'Рак ♋' },
+  8:  { en: 'Leo ♌', ru: 'Лев ♌' },
+  9:  { en: 'Virgo ♍', ru: 'Дева ♍' },
+  10: { en: 'Jupiter ♃', ru: 'Юпитер ♃' },
+  11: { en: 'Libra ♎', ru: 'Весы ♎' },
+  12: { en: 'Neptune ♆', ru: 'Нептун ♆' },
+  13: { en: 'Scorpio ♏', ru: 'Скорпион ♏' },
+  14: { en: 'Sagittarius ♐', ru: 'Стрелец ♐' },
+  15: { en: 'Capricorn ♑', ru: 'Козерог ♑' },
+  16: { en: 'Mars ♂', ru: 'Марс ♂' },
+  17: { en: 'Aquarius ♒', ru: 'Водолей ♒' },
+  18: { en: 'Pisces ♓', ru: 'Рыбы ♓' },
+  19: { en: 'Sun ☉', ru: 'Солнце ☉' },
+  20: { en: 'Pluto ♇', ru: 'Плутон ♇' },
+  21: { en: 'Saturn ♄', ru: 'Сатурн ♄' }
+};
+
+function tAstro(cardId, lang) {
+  if (lang === 'zh') return '';
+  const entry = ASTRO_NAMES[cardId];
+  return entry?.[lang] || '';
+}
+
+/* ==================================================================
    UI 界面文字翻译
    ================================================================== */
 const UI = {
@@ -889,6 +923,7 @@ const UI = {
   // ====== 百科筛选 ======
   'filter-all':      { zh: '全部', en: 'All', ru: 'Все' },
   'no-results':      { zh: '没有找到匹配的牌', en: 'No matching cards found', ru: 'Подходящих карт не найдено' },
+  'search-placeholder':{ zh: '🔍 搜索牌名……', en: '🔍 Search cards...', ru: '🔍 Поиск карт...' },
   'filter-major':    { zh: '大阿卡纳', en: 'Major Arcana', ru: 'Старшие Арканы' },
   'filter-wands':    { zh: '权杖', en: 'Wands', ru: 'Жезлы' },
   'filter-cups':     { zh: '圣杯', en: 'Cups', ru: 'Кубки' },

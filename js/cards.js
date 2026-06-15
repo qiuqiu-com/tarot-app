@@ -707,6 +707,7 @@ function getCardMeta(card) {
         meta.typeEn = 'Major Arcana';
         meta.typeKey = 'filter-major';
         meta.astrology = MAJOR_ASTROLOGY[card.id] || '';
+        meta.astroCardId = card.id;
         meta.hebrew = MAJOR_HEBREW[card.id] || '';
         meta.numberMeaning = '关键牌 · 人生大课题';
     } else {

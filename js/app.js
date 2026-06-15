@@ -3,6 +3,17 @@
    ============================================================ */
 
 // ==================================================================
+// 工具函数
+// ==================================================================
+function astroText(meta) {
+  if (meta.astroCardId !== undefined && typeof tAstro === 'function') {
+    const t = tAstro(meta.astroCardId, getLang());
+    if (t) return t;
+  }
+  return meta.astrology;
+}
+
+// ==================================================================
 // 状态
 // ==================================================================
 let currentReading = null;
@@ -535,7 +546,7 @@ function showReading() {
                 <div class="rci-position">${__(item.position.labelKey)}</div>
                 <div class="rci-position-desc">${item.position.descKey ? __(item.position.descKey) : ''}</div>
                 <div class="rci-card-name">${t(item.card, 'name')}${getLang() === 'zh' ? ` <span style="font-weight:400;font-size:0.85rem;color:var(--text-dim);">· ${item.card.nameEn}</span>` : ''}</div>
-                <div class="rci-card-sub">${meta.typeKey && typeof __ === 'function' ? __(meta.typeKey) : meta.type} · ${meta.astrology || (meta.elementTransKey && typeof __ === 'function' ? __(meta.elementTransKey) : meta.element) || ''}</div>
+                <div class="rci-card-sub">${meta.typeKey && typeof __ === 'function' ? __(meta.typeKey) : meta.type} · ${astroText(meta) || (meta.elementTransKey && typeof __ === 'function' ? __(meta.elementTransKey) : meta.element) || ''}</div>
                 <div class="rci-orientation">${reading.orientation} · ${item.card.number}</div>
                 <div class="rci-meaning">${reading.meaning}</div>
                 <div class="rci-tags">
@@ -588,7 +599,7 @@ function showCardDetail(card, reversed) {
         infoGrid += `
             <div class="info-item">
                 <div class="ii-label">${__('meta-astrology')}</div>
-                <div class="ii-value">${meta.astrology || '—'}</div>
+                <div class="ii-value">${astroText(meta) || '—'}</div>
             </div>
             <div class="info-item">
                 <div class="ii-label">${__('meta-hebrew')}</div>
@@ -914,7 +925,7 @@ function showHistoryDetail(record) {
                 <div class="rci-content">
                     <div class="rci-position">${c.position}</div>
                     <div class="rci-card-name">${c.cardName}</div>
-                    <div class="rci-card-sub">${meta.typeKey && typeof __ === 'function' ? __(meta.typeKey) : meta.type} · ${meta.astrology || (meta.elementTransKey && typeof __ === 'function' ? __(meta.elementTransKey) : meta.element) || ''}</div>
+                    <div class="rci-card-sub">${meta.typeKey && typeof __ === 'function' ? __(meta.typeKey) : meta.type} · ${astroText(meta) || (meta.elementTransKey && typeof __ === 'function' ? __(meta.elementTransKey) : meta.element) || ''}</div>
                     <div class="rci-orientation">${orientation}</div>
                     <div class="rci-meaning">${meaning}</div>
                 </div>
@@ -988,7 +999,7 @@ function refreshReadingText() {
     if (posLabel) posLabel.textContent = __(item.position.labelKey);
     if (posDesc) posDesc.textContent = item.position.descKey ? __(item.position.descKey) : '';
     if (cardName) cardName.innerHTML = `${t(item.card, 'name')}${getLang() === 'zh' ? ` <span style="font-weight:400;font-size:0.85rem;color:var(--text-dim);">· ${item.card.nameEn}</span>` : ''}`;
-    if (cardSub) cardSub.textContent = `${meta.typeKey && typeof __ === 'function' ? __(meta.typeKey) : meta.type} · ${meta.astrology || (meta.elementTransKey && typeof __ === 'function' ? __(meta.elementTransKey) : meta.element) || ''}`;
+    if (cardSub) cardSub.textContent = `${meta.typeKey && typeof __ === 'function' ? __(meta.typeKey) : meta.type} · ${astroText(meta) || (meta.elementTransKey && typeof __ === 'function' ? __(meta.elementTransKey) : meta.element) || ''}`;
     if (orient) orient.textContent = `${r.orientation} · ${item.card.number}`;
     if (meaning) meaning.textContent = r.meaning;
     if (tags) tags.innerHTML = r.keywords.map(k => `<span>${k}</span>`).join('');
