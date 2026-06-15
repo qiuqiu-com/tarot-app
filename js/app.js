@@ -136,7 +136,7 @@ function startShuffle(spreadId) {
     for (let i = 0; i < cardCount; i++) {
         const el = document.createElement('div');
         el.className = 'shuffle-card-el';
-        el.innerHTML = '<div class="mandala"></div>';
+        el.innerHTML = '<img src="images/card-back.png" alt="" draggable="false" style="width:100%;height:100%;object-fit:cover;border-radius:8px;">';
         el.style.zIndex = cardCount - i;
         el.style.animationDelay = (i * 0.03) + 's';
         table.appendChild(el);
