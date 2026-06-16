@@ -208,7 +208,7 @@ function enterDrawPhase(spreadId) {
         wrapper.innerHTML = `
             <div class="draw-card-inner">
                 <div class="card-back-face">
-                    <img src="${getRandomCardBack()}" alt="" draggable="false">
+                    <img src="images/card-back.png" alt="" draggable="false">
                 </div>
                 <div class="card-front-face"></div>
             </div>
