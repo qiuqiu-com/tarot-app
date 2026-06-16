@@ -501,7 +501,8 @@ function showReading() {
           if (ci < reply.length) {
             typingEl.textContent += reply[ci];
             ci++;
-            typingEl.scrollIntoView({ behavior: 'smooth' });
+            const chatBox = document.getElementById('chat-messages');
+            chatBox.scrollTop = chatBox.scrollHeight;
           } else {
             clearInterval(typer);
           }
@@ -968,7 +969,8 @@ function appendMessage(role, text) {
   text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
   el.innerHTML = text;
   document.getElementById('chat-messages').appendChild(el);
-  el.scrollIntoView({ behavior: 'smooth' });
+  const chatBox = document.getElementById('chat-messages');
+  chatBox.scrollTop = chatBox.scrollHeight;
   return el;
 }
 
