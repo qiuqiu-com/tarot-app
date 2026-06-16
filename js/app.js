@@ -507,14 +507,13 @@ function showReading() {
         let ci = 0;
         const typer = setInterval(() => {
           if (ci < reply.length) {
-            typingEl.textContent += reply[ci];
             ci++;
+            // 每追加一个字，对当前完整文字做 Markdown 粗体替换再渲染
+            typingEl.innerHTML = reply.slice(0, ci).replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
             const chatBox = document.getElementById('chat-messages');
             chatBox.scrollTop = chatBox.scrollHeight;
           } else {
             clearInterval(typer);
-            // 打字完成后将 Markdown 粗体 **text** 转为 HTML <strong>
-            typingEl.innerHTML = reply.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
           }
         }, 30);
       } catch {
