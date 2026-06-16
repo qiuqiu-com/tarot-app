@@ -700,8 +700,7 @@ $('#btn-share-toggle').addEventListener('click', () => {
 
     if (!currentReading) return;
     const r = currentReading;
-    let text = `${__('tagline')}\n`;
-    text += `${r.spread.id ? __(SPREAD_NAMES[r.spread.id]) : r.spread.name}\n`;
+    let text = `${r.spread.id ? __(SPREAD_NAMES[r.spread.id]) : r.spread.name}\n`;
     if (r.question) text += `${r.question}\n`;
     text += `${formatDate(r.date.toISOString())}\n`;
     text += `━`.repeat(18) + `\n`;
