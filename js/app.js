@@ -513,6 +513,8 @@ function showReading() {
             chatBox.scrollTop = chatBox.scrollHeight;
           } else {
             clearInterval(typer);
+            // 打字完成后将 Markdown 粗体 **text** 转为 HTML <strong>
+            typingEl.innerHTML = reply.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
           }
         }, 30);
       } catch {
