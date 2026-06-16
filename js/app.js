@@ -19,6 +19,13 @@ function astroText(meta) {
 let currentReading = null;
 let shuffleTimer = null;
 let shuffleCount = 0;
+
+// 牌背图片池（card-back2 ~ card-back10）
+const CARD_BACKS = Array.from({ length: 9 }, (_, i) => `images/card-back${i + 2}.png`);
+
+function getRandomCardBack() {
+  return CARD_BACKS[Math.floor(Math.random() * CARD_BACKS.length)];
+}
 const SHUFFLE_MS = 3000;
 
 // ==================================================================
@@ -136,7 +143,8 @@ function startShuffle(spreadId) {
     for (let i = 0; i < cardCount; i++) {
         const el = document.createElement('div');
         el.className = 'shuffle-card-el';
-        el.innerHTML = '<img src="images/card-back.png" alt="" draggable="false" style="width:100%;height:100%;object-fit:cover;border-radius:8px;">';
+        const backImg = getRandomCardBack();
+        el.innerHTML = `<img src="${backImg}" alt="" draggable="false" style="width:100%;height:100%;object-fit:cover;border-radius:8px;">`;
         el.style.zIndex = cardCount - i;
         el.style.animationDelay = (i * 0.03) + 's';
         table.appendChild(el);
@@ -200,7 +208,7 @@ function enterDrawPhase(spreadId) {
         wrapper.innerHTML = `
             <div class="draw-card-inner">
                 <div class="card-back-face">
-                    <img src="images/card-back.png" alt="" draggable="false">
+                    <img src="${getRandomCardBack()}" alt="" draggable="false">
                 </div>
                 <div class="card-front-face"></div>
             </div>
