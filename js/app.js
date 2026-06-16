@@ -966,9 +966,27 @@ function buildCardContext() {
   const question = currentReading?.question
     ? `${__('q-label')}：${currentReading.question}\n\n`
     : '';
-  return question + currentReading.cards.map(item =>
-    `${t(item.card, 'name')}（${item.reversed ? __('draw-rev') : __('draw-upright')}）- ${__(item.position.labelKey)}`
-  ).join('\n');
+  const spreadId = currentReading?.spread?.id;
+  const spreadName = SPREAD_NAMES[spreadId] ? __(SPREAD_NAMES[spreadId]) : spreadId || '';
+  let ctx = `牌阵：${spreadName}\n`;
+  if (question) ctx = question + ctx;
+  ctx += currentReading.cards.map((item, idx) => {
+    const card = item.card;
+    const meta = getCardMeta(card);
+    const orientation = item.reversed ? __('draw-rev') : __('draw-upright');
+    const posName = __(item.position.labelKey);
+    const posDesc = item.position.descKey ? __(item.position.descKey) : '';
+    const elemStr = meta.element ? ` ${meta.element}` : '';
+    const elemNature = meta.elementNature ? `（${meta.elementNature}）` : '';
+
+    let line = `【第${idx+1}张】${t(card, 'name')} — ${posName}`;
+    line += `\n  状态：${orientation} | 类型：${meta.type}${elemStr}${elemNature}`;
+    line += `\n  位置含义：${posDesc}`;
+    line += `\n  关键词：${card.keywords.join('、')}`;
+    if (meta.numberMeaning) line += `\n  ${meta.numberMeaning}`;
+    return line;
+  }).join('\n\n');
+  return ctx;
 }
 
 function appendMessage(role, text) {
