@@ -964,7 +964,9 @@ function buildCardContext() {
 function appendMessage(role, text) {
   const el = document.createElement('div');
   el.className = role === 'user' ? 'chat-msg-user' : 'chat-msg-assistant';
-  el.textContent = text;
+  // 将 Markdown 粗体 **text** 转换为 HTML <strong>
+  text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+  el.innerHTML = text;
   document.getElementById('chat-messages').appendChild(el);
   el.scrollIntoView({ behavior: 'smooth' });
   return el;
